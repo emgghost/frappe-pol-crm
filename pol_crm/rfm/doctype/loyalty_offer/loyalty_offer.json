@@ -1,0 +1,119 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "autoname": "format:OFFER-{customer}-{#####}",
+  "creation": "2026-10-17 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "title_field": "discount_code",
+  "search_fields": "customer,discount_code,reason,status",
+  "show_title_field_in_link": 1,
+  "field_order": [
+    "customer",
+    "reason",
+    "offer_type",
+    "column_break_1",
+    "status",
+    "valid_from",
+    "valid_until",
+    "section_discount",
+    "discount_code",
+    "percentage_value"
+  ],
+  "fields": [
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "مشتری",
+      "options": "Customer",
+      "reqd": 1
+    },
+    {
+      "fieldname": "reason",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "دلیل پیشنهاد",
+      "options": "SECOND_ORDER\nPOTENTIAL_LOYALIST\nAT_RISK\nCANT_LOSE\nTIER_REWARD",
+      "reqd": 1
+    },
+    {
+      "default": "DISCOUNT_CODE",
+      "fieldname": "offer_type",
+      "fieldtype": "Select",
+      "label": "نوع پیشنهاد",
+      "options": "DISCOUNT_CODE\nBONUS_POINTS"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "ACTIVE",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "وضعیت",
+      "options": "ACTIVE\nUSED\nEXPIRED"
+    },
+    {
+      "fieldname": "valid_from",
+      "fieldtype": "Date",
+      "label": "معتبر از"
+    },
+    {
+      "fieldname": "valid_until",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "label": "معتبر تا"
+    },
+    {
+      "fieldname": "section_discount",
+      "fieldtype": "Section Break",
+      "label": "مشخصات تخفیف"
+    },
+    {
+      "fieldname": "discount_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "کد تخفیف"
+    },
+    {
+      "fieldname": "percentage_value",
+      "fieldtype": "Float",
+      "label": "درصد تخفیف"
+    }
+  ],
+  "module": "RFM",
+  "name": "Loyalty Offer",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "Marketing Manager",
+      "write": 1
+    },
+    {
+      "create": 1,
+      "read": 1,
+      "role": "Sales Manager",
+      "write": 1
+    },
+    {
+      "create": 1,
+      "read": 1,
+      "role": "Sales User"
+    }
+  ]
+}

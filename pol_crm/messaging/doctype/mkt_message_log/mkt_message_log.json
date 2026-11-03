@@ -1,0 +1,123 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "autoname": "format:MSG-{#####}",
+  "creation": "2026-10-17 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "title_field": "recipient",
+  "search_fields": "customer,recipient,channel,status",
+  "show_title_field_in_link": 1,
+  "field_order": [
+    "customer",
+    "scenario",
+    "channel",
+    "recipient",
+    "column_break_1",
+    "status",
+    "skip_reason",
+    "category",
+    "external_id",
+    "section_content",
+    "message_body"
+  ],
+  "fields": [
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "مشتری",
+      "options": "Customer"
+    },
+    {
+      "fieldname": "scenario",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "سناریو",
+      "options": "Mkt Scenario"
+    },
+    {
+      "default": "SMS",
+      "fieldname": "channel",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "کانال ارتباطی",
+      "options": "SMS\nTELEGRAM\nWHATSAPP\nEMAIL"
+    },
+    {
+      "fieldname": "recipient",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "آدرس گیرنده"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "وضعیت پیام",
+      "options": "SENT\nFAILED\nPOSTPONED\nSKIPPED"
+    },
+    {
+      "fieldname": "skip_reason",
+      "fieldtype": "Data",
+      "label": "دلیل عدم ارسال / خطا"
+    },
+    {
+      "default": "marketing",
+      "fieldname": "category",
+      "fieldtype": "Select",
+      "label": "دسته‌بندی",
+      "options": "marketing\ntransactional"
+    },
+    {
+      "fieldname": "external_id",
+      "fieldtype": "Data",
+      "label": "شناسه ارائه‌دهنده (Message ID)"
+    },
+    {
+      "fieldname": "section_content",
+      "fieldtype": "Section Break",
+      "label": "متن پیام"
+    },
+    {
+      "fieldname": "message_body",
+      "fieldtype": "Small Text",
+      "label": "متن ارسال شده"
+    }
+  ],
+  "module": "Messaging",
+  "name": "Mkt Message Log",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    },
+    {
+      "export": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Marketing Manager"
+    },
+    {
+      "export": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Sales Manager"
+    },
+    {
+      "read": 1,
+      "role": "Sales User"
+    }
+  ]
+}

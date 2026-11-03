@@ -1,0 +1,141 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "creation": "2026-10-17 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "quiet_hours_section",
+    "quiet_hours_enabled",
+    "quiet_start_hour",
+    "quiet_end_hour",
+    "timezone",
+    "capping_section",
+    "cap_per_day",
+    "cap_per_week",
+    "test_mode_section",
+    "test_mode",
+    "test_phone",
+    "kavenegar_section",
+    "kavenegar_api_key",
+    "kavenegar_sender_line",
+    "telegram_section",
+    "telegram_bot_token",
+    "telegram_proxy_url",
+    "telegram_relay_url"
+  ],
+  "fields": [
+    {
+      "fieldname": "quiet_hours_section",
+      "fieldtype": "Section Break",
+      "label": "ساعات سکوت (Quiet Hours)"
+    },
+    {
+      "default": "1",
+      "fieldname": "quiet_hours_enabled",
+      "fieldtype": "Check",
+      "label": "فعال‌سازی ساعات سکوت"
+    },
+    {
+      "default": "21",
+      "fieldname": "quiet_start_hour",
+      "fieldtype": "Int",
+      "label": "شروع ساعات سکوت (ساعت شب)"
+    },
+    {
+      "default": "9",
+      "fieldname": "quiet_end_hour",
+      "fieldtype": "Int",
+      "label": "پایان ساعات سکوت (ساعت صبح)"
+    },
+    {
+      "default": "Asia/Tehran",
+      "fieldname": "timezone",
+      "fieldtype": "Data",
+      "label": "منطقه زمانی"
+    },
+    {
+      "fieldname": "capping_section",
+      "fieldtype": "Section Break",
+      "label": "سقف ارسال پیام (Frequency Capping)"
+    },
+    {
+      "default": "1",
+      "fieldname": "cap_per_day",
+      "fieldtype": "Int",
+      "label": "حداکثر پیام در روز برای هر مشتری"
+    },
+    {
+      "default": "2",
+      "fieldname": "cap_per_week",
+      "fieldtype": "Int",
+      "label": "حداکثر پیام در هفته برای هر مشتری"
+    },
+    {
+      "fieldname": "test_mode_section",
+      "fieldtype": "Section Break",
+      "label": "حالت آزمایشی (Test Mode)"
+    },
+    {
+      "default": "0",
+      "fieldname": "test_mode",
+      "fieldtype": "Check",
+      "label": "فعال بودن حالت تست (ارسال تمام پیام‌ها به شماره تست)"
+    },
+    {
+      "fieldname": "test_phone",
+      "fieldtype": "Data",
+      "label": "شماره تلفن دریافت‌کننده در حالت تست"
+    },
+    {
+      "fieldname": "kavenegar_section",
+      "fieldtype": "Section Break",
+      "label": "تنظیمات درگاه پیامک کاوه‌نگار"
+    },
+    {
+      "fieldname": "kavenegar_api_key",
+      "fieldtype": "Password",
+      "label": "کلید API کاوه‌نگار"
+    },
+    {
+      "fieldname": "kavenegar_sender_line",
+      "fieldtype": "Data",
+      "label": "شماره خط فرستنده اختصاصی"
+    },
+    {
+      "fieldname": "telegram_section",
+      "fieldtype": "Section Break",
+      "label": "تنظیمات ربات تلگرام"
+    },
+    {
+      "fieldname": "telegram_bot_token",
+      "fieldtype": "Password",
+      "label": "توکن ربات تلگرام"
+    },
+    {
+      "fieldname": "telegram_proxy_url",
+      "fieldtype": "Data",
+      "label": "آدرس پروکسی (اختیاری - مثل socks5://127.0.0.1:1080)"
+    },
+    {
+      "fieldname": "telegram_relay_url",
+      "fieldtype": "Data",
+      "label": "آدرس Reverse Proxy / ریله تلگرام (اختیاری)"
+    }
+  ],
+  "issingle": 1,
+  "module": "Messaging",
+  "name": "Messaging Settings",
+  "permissions": [
+    {
+      "create": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Marketing Manager"
+    }
+  ]
+}

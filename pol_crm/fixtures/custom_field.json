@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Customer-custom_loyalty_rfm_tab",
+    "dt": "Customer",
+    "fieldname": "custom_loyalty_rfm_tab",
+    "fieldtype": "Tab Break",
+    "label": "وفاداری و بخش‌بندی (Loyalty & RFM)",
+    "insert_after": "connections_tab",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_section",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_section",
+    "fieldtype": "Section Break",
+    "label": "امتیازات و بخش‌بندی RFM",
+    "insert_after": "custom_loyalty_rfm_tab",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_segment",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_segment",
+    "fieldtype": "Select",
+    "in_list_view": 1,
+    "in_standard_filter": 1,
+    "label": "سگمنت RFM",
+    "options": "\nCHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST",
+    "read_only": 1,
+    "insert_after": "custom_rfm_section",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_composite_score",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_composite_score",
+    "fieldtype": "Data",
+    "in_list_view": 1,
+    "label": "امتیاز ترکیبی RFM",
+    "read_only": 1,
+    "insert_after": "custom_rfm_segment",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_recency_score",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_recency_score",
+    "fieldtype": "Int",
+    "label": "امتیاز تازگی (R)",
+    "read_only": 1,
+    "insert_after": "custom_rfm_composite_score",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_frequency_score",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_frequency_score",
+    "fieldtype": "Int",
+    "label": "امتیاز فرکانس (F)",
+    "read_only": 1,
+    "insert_after": "custom_rfm_recency_score",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_rfm_monetary_score",
+    "dt": "Customer",
+    "fieldname": "custom_rfm_monetary_score",
+    "fieldtype": "Int",
+    "label": "امتیاز ارزش خرید (M)",
+    "read_only": 1,
+    "insert_after": "custom_rfm_frequency_score",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_last_purchase_date",
+    "dt": "Customer",
+    "fieldname": "custom_last_purchase_date",
+    "fieldtype": "Date",
+    "label": "تاریخ آخرین خرید",
+    "read_only": 1,
+    "insert_after": "custom_rfm_monetary_score",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_days_since_last_purchase",
+    "dt": "Customer",
+    "fieldname": "custom_days_since_last_purchase",
+    "fieldtype": "Int",
+    "label": "روزهای گذشته از آخرین خرید",
+    "read_only": 1,
+    "insert_after": "custom_last_purchase_date",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_total_spent",
+    "dt": "Customer",
+    "fieldname": "custom_total_spent",
+    "fieldtype": "Currency",
+    "label": "مجموع مبالغ پرداخت‌شده",
+    "read_only": 1,
+    "insert_after": "custom_days_since_last_purchase",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_paid_invoices_count",
+    "dt": "Customer",
+    "fieldname": "custom_paid_invoices_count",
+    "fieldtype": "Int",
+    "label": "تعداد کل خریدهای پرداخت‌شده",
+    "read_only": 1,
+    "insert_after": "custom_total_spent",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_communications_tab",
+    "dt": "Customer",
+    "fieldname": "custom_communications_tab",
+    "fieldtype": "Tab Break",
+    "label": "ارتباطات و بازاریابی (Communications)",
+    "insert_after": "custom_paid_invoices_count",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_marketing_section",
+    "dt": "Customer",
+    "fieldname": "custom_marketing_section",
+    "fieldtype": "Section Break",
+    "label": "تنظیمات بازاریابی و رضایت (Marketing & Consent)",
+    "insert_after": "custom_communications_tab",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_mkt_opted_out_all",
+    "dt": "Customer",
+    "fieldname": "custom_mkt_opted_out_all",
+    "fieldtype": "Check",
+    "label": "عدم تمایل به دریافت هرگونه پیام بازاریابی (Opt-out All)",
+    "insert_after": "custom_marketing_section",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_mkt_sms_opted_out",
+    "dt": "Customer",
+    "fieldname": "custom_mkt_sms_opted_out",
+    "fieldtype": "Check",
+    "label": "لغو اشتراک پیامکی (SMS Opt-out)",
+    "insert_after": "custom_mkt_opted_out_all",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_mkt_preferred_channel",
+    "dt": "Customer",
+    "fieldname": "custom_mkt_preferred_channel",
+    "fieldtype": "Select",
+    "label": "کانال ارتباطی ترجیحی",
+    "options": "\nSMS\nTELEGRAM\nWHATSAPP\nEMAIL",
+    "insert_after": "custom_mkt_sms_opted_out",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Customer-custom_telegram_chat_id",
+    "dt": "Customer",
+    "fieldname": "custom_telegram_chat_id",
+    "fieldtype": "Data",
+    "label": "شناسه چت تلگرام (Telegram Chat ID)",
+    "insert_after": "custom_mkt_preferred_channel",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Contact-custom_rfm_segment",
+    "dt": "Contact",
+    "fieldname": "custom_rfm_segment",
+    "fieldtype": "Select",
+    "in_list_view": 1,
+    "in_standard_filter": 1,
+    "label": "سگمنت RFM",
+    "options": "\nCHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST",
+    "read_only": 1,
+    "insert_after": "status",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "Contact-custom_telegram_chat_id",
+    "dt": "Contact",
+    "fieldname": "custom_telegram_chat_id",
+    "fieldtype": "Data",
+    "label": "شناسه چت تلگرام (Telegram Chat ID)",
+    "insert_after": "custom_rfm_segment",
+    "doctype": "Custom Field"
+  },
+  {
+    "name": "CRM Deal-custom_rfm_segment",
+    "dt": "CRM Deal",
+    "fieldname": "custom_rfm_segment",
+    "fieldtype": "Select",
+    "in_list_view": 1,
+    "in_standard_filter": 1,
+    "label": "سگمنت RFM مشتری",
+    "options": "\nCHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST",
+    "fetch_from": "contact.custom_rfm_segment",
+    "read_only": 1,
+    "insert_after": "contact",
+    "doctype": "Custom Field"
+  }
+]

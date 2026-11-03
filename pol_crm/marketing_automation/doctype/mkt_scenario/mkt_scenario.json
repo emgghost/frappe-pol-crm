@@ -1,0 +1,119 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "autoname": "format:SCN-{#####}",
+  "creation": "2026-10-17 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "title_field": "scenario_name",
+  "search_fields": "scenario_name,trigger_type,channel,target_rfm_segment",
+  "show_title_field_in_link": 1,
+  "field_order": [
+    "scenario_name",
+    "enabled",
+    "trigger_type",
+    "column_break_1",
+    "target_rfm_segment",
+    "inactivity_days",
+    "channel",
+    "template_code",
+    "section_message",
+    "message_template"
+  ],
+  "fields": [
+    {
+      "fieldname": "scenario_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "عنوان سناریو",
+      "reqd": 1
+    },
+    {
+      "default": "1",
+      "fieldname": "enabled",
+      "fieldtype": "Check",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "فعال"
+    },
+    {
+      "default": "RFM_SEGMENT_CHANGE",
+      "fieldname": "trigger_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "نوع تریگر",
+      "options": "RFM_SEGMENT_CHANGE\nINACTIVITY\nFIRST_ORDER\nBIRTHDAY",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "depends_on": "eval:doc.trigger_type=='RFM_SEGMENT_CHANGE'",
+      "fieldname": "target_rfm_segment",
+      "fieldtype": "Select",
+      "label": "سگمنت هدف RFM",
+      "options": "CHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST"
+    },
+    {
+      "depends_on": "eval:doc.trigger_type=='INACTIVITY'",
+      "fieldname": "inactivity_days",
+      "fieldtype": "Int",
+      "label": "روزهای عدم فعالیت"
+    },
+    {
+      "default": "SMS",
+      "fieldname": "channel",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "کانال ارتباطی",
+      "options": "SMS\nTELEGRAM\nWHATSAPP\nEMAIL"
+    },
+    {
+      "description": "کد الگوی کاوه‌نگار برای عبور از بلک‌لیست (اختیاری)",
+      "fieldname": "template_code",
+      "fieldtype": "Data",
+      "label": "کد الگوی پیامک (پترن)"
+    },
+    {
+      "fieldname": "section_message",
+      "fieldtype": "Section Break",
+      "label": "قالب پیام"
+    },
+    {
+      "description": "امکان استفاده از متغیرها مانند {{ customer_name }} وجود دارد.",
+      "fieldname": "message_template",
+      "fieldtype": "Small Text",
+      "label": "متن قالب پیام",
+      "reqd": 1
+    }
+  ],
+  "module": "Marketing Automation",
+  "name": "Mkt Scenario",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "read": 1,
+      "role": "Marketing Manager",
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Sales Manager"
+    },
+    {
+      "read": 1,
+      "role": "Sales User"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "actions": [],
+  "allow_rename": 0,
+  "creation": "2026-10-17 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "recency_section",
+    "r_threshold_1",
+    "r_threshold_2",
+    "r_threshold_3",
+    "r_threshold_4",
+    "frequency_section",
+    "f_threshold_1",
+    "f_threshold_2",
+    "f_threshold_3",
+    "f_threshold_4",
+    "monetary_section",
+    "m_threshold_1",
+    "m_threshold_2",
+    "m_threshold_3",
+    "m_threshold_4"
+  ],
+  "fields": [
+    {
+      "fieldname": "recency_section",
+      "fieldtype": "Section Break",
+      "label": "آستانه‌های تازگی خرید (Recency - بر حسب روز)"
+    },
+    {
+      "default": "30",
+      "fieldname": "r_threshold_1",
+      "fieldtype": "Int",
+      "label": "امتیاز ۵ (حداکثر روز)"
+    },
+    {
+      "default": "60",
+      "fieldname": "r_threshold_2",
+      "fieldtype": "Int",
+      "label": "امتیاز ۴ (حداکثر روز)"
+    },
+    {
+      "default": "90",
+      "fieldname": "r_threshold_3",
+      "fieldtype": "Int",
+      "label": "امتیاز ۳ (حداکثر روز)"
+    },
+    {
+      "default": "180",
+      "fieldname": "r_threshold_4",
+      "fieldtype": "Int",
+      "label": "امتیاز ۲ (حداکثر روز)"
+    },
+    {
+      "fieldname": "frequency_section",
+      "fieldtype": "Section Break",
+      "label": "آستانه‌های فرکانس و تعداد خرید (Frequency)"
+    },
+    {
+      "default": "1",
+      "fieldname": "f_threshold_1",
+      "fieldtype": "Int",
+      "label": "امتیاز ۱ (حداکثر خرید)"
+    },
+    {
+      "default": "3",
+      "fieldname": "f_threshold_2",
+      "fieldtype": "Int",
+      "label": "امتیاز ۲ (حداکثر خرید)"
+    },
+    {
+      "default": "6",
+      "fieldname": "f_threshold_3",
+      "fieldtype": "Int",
+      "label": "امتیاز ۳ (حداکثر خرید)"
+    },
+    {
+      "default": "12",
+      "fieldname": "f_threshold_4",
+      "fieldtype": "Int",
+      "label": "امتیاز ۴ (حداکثر خرید)"
+    },
+    {
+      "fieldname": "monetary_section",
+      "fieldtype": "Section Break",
+      "label": "آستانه‌های ارزش و مبلغ خرید (Monetary)"
+    },
+    {
+      "default": "1000000",
+      "fieldname": "m_threshold_1",
+      "fieldtype": "Currency",
+      "label": "امتیاز ۱ (حداکثر مبلغ)"
+    },
+    {
+      "default": "3000000",
+      "fieldname": "m_threshold_2",
+      "fieldtype": "Currency",
+      "label": "امتیاز ۲ (حداکثر مبلغ)"
+    },
+    {
+      "default": "8000000",
+      "fieldname": "m_threshold_3",
+      "fieldtype": "Currency",
+      "label": "امتیاز ۳ (حداکثر مبلغ)"
+    },
+    {
+      "default": "20000000",
+      "fieldname": "m_threshold_4",
+      "fieldtype": "Currency",
+      "label": "امتیاز ۴ (حداکثر مبلغ)"
+    }
+  ],
+  "issingle": 1,
+  "module": "RFM",
+  "name": "RFM Settings",
+  "permissions": [
+    {
+      "create": 1,
+      "read": 1,
+      "role": "System Manager",
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Marketing Manager"
+    }
+  ]
+}

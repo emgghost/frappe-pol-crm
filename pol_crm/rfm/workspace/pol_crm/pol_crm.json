@@ -1,0 +1,312 @@
+{
+ "charts": [
+  {
+   "chart_name": "POL Customer RFM Distribution",
+   "label": "توزیع سگمنت‌های مشتریان (RFM)"
+  }
+ ],
+ "content": "[{\"id\":\"pol_h1\",\"type\":\"header\",\"data\":{\"text\":\"باشگاه مشتریان و اتوماسیون بازاریابی پل (POL CRM)\",\"level\":3,\"col\":12}},{\"id\":\"pol_c1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"مشتریان وفادار و قهرمان\",\"col\":3}},{\"id\":\"pol_c2\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"مشتریان در خطر ریزش\",\"col\":3}},{\"id\":\"pol_c3\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"آفرهای فعال وفاداری\",\"col\":3}},{\"id\":\"pol_c4\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"پیام‌های ارسال‌شده\",\"col\":3}},{\"id\":\"pol_ch1\",\"type\":\"chart\",\"data\":{\"chart_name\":\"توزیع سگمنت‌های مشتریان (RFM)\",\"col\":12}},{\"id\":\"pol_h2\",\"type\":\"header\",\"data\":{\"text\":\"دسترسی سریع\",\"level\":4,\"col\":12}},{\"id\":\"pol_sc1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"آفرهای فعال\",\"col\":3}},{\"id\":\"pol_sc2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"سناریوهای بازاریابی\",\"col\":3}},{\"id\":\"pol_sc3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"پیام‌های ارسالی\",\"col\":3}},{\"id\":\"pol_sc4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"تنظیمات RFM\",\"col\":3}},{\"id\":\"pol_h3\",\"type\":\"header\",\"data\":{\"text\":\"بخش‌ها و اسناد\",\"level\":4,\"col\":12}},{\"id\":\"pol_card1\",\"type\":\"card\",\"data\":{\"card_name\":\"باشگاه مشتریان و وفاداری\",\"col\":4}},{\"id\":\"pol_card2\",\"type\":\"card\",\"data\":{\"card_name\":\"اتوماسیون بازاریابی و پیام‌رسانی\",\"col\":4}},{\"id\":\"pol_card3\",\"type\":\"card\",\"data\":{\"card_name\":\"یکپارچگی با CRM\",\"col\":4}},{\"id\":\"pol_card4\",\"type\":\"card\",\"data\":{\"card_name\":\"گزارش‌ها و تحلیل‌ها\",\"col\":6}},{\"id\":\"pol_card5\",\"type\":\"card\",\"data\":{\"card_name\":\"پیکربندی و تنظیمات پایه\",\"col\":6}}]",
+ "creation": "2026-10-17 12:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "users",
+ "idx": 1,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "POL CRM",
+ "links": [
+  {
+   "hidden": 0,
+   "icon": "award",
+   "is_query_report": 0,
+   "label": "باشگاه مشتریان و وفاداری",
+   "link_count": 4,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "آفرهای وفاداری و کدهای تخفیف",
+   "link_count": 0,
+   "link_to": "Loyalty Offer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "برنامه وفاداری (Loyalty Program)",
+   "link_count": 0,
+   "link_to": "Loyalty Program",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "لیست کامل مشتریان",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "تنظیمات الگوریتم RFM",
+   "link_count": 0,
+   "link_to": "RFM Settings",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "send",
+   "is_query_report": 0,
+   "label": "اتوماسیون بازاریابی و پیام‌رسانی",
+   "link_count": 4,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "سناریوهای خودکار بازاریابی",
+   "link_count": 0,
+   "link_to": "Mkt Scenario",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "تاریخچه و لاگ پیام‌ها",
+   "link_count": 0,
+   "link_to": "Mkt Message Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "کمپین‌های بازاریابی",
+   "link_count": 0,
+   "link_to": "Campaign",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "تنظیمات درگاه‌ها و پیام‌رسانی",
+   "link_count": 0,
+   "link_to": "Messaging Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "users",
+   "is_query_report": 0,
+   "label": "یکپارچگی با CRM",
+   "link_count": 4,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "مخاطبین CRM (Contacts)",
+   "link_count": 0,
+   "link_to": "Contact",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "معامله‌های CRM (Deals)",
+   "link_count": 0,
+   "link_to": "CRM Deal",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "سازمان‌های CRM (Organizations)",
+   "link_count": 0,
+   "link_to": "CRM Organization",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "سرنخ‌های فروش (Leads)",
+   "link_count": 0,
+   "link_to": "Lead",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "bar-chart-2",
+   "is_query_report": 0,
+   "label": "گزارش‌ها و تحلیل‌ها",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "جذب مشتری و تحلیل وفاداری",
+   "link_count": 0,
+   "link_to": "Customer Acquisition and Loyalty",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "مشتریان بدون تراکنش فروش",
+   "link_count": 0,
+   "link_to": "Customers Without Any Sales Transactions",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "آدرس‌ها و مخاطبین مشتریان",
+   "link_count": 0,
+   "link_to": "Address And Contacts",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "icon": "settings",
+   "is_query_report": 0,
+   "label": "پیکربندی و تنظیمات پایه",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "تنظیمات کلی CRM",
+   "link_count": 0,
+   "link_to": "CRM Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "گروه‌های مشتریان",
+   "link_count": 0,
+   "link_to": "Customer Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "مناطق فروش (Territory)",
+   "link_count": 0,
+   "link_to": "Territory",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-18 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "RFM",
+ "name": "POL CRM",
+ "number_cards": [
+  {
+   "label": "مشتریان وفادار و قهرمان",
+   "number_card_name": "POL VIP Customers"
+  },
+  {
+   "label": "مشتریان در خطر ریزش",
+   "number_card_name": "POL At Risk Customers"
+  },
+  {
+   "label": "آفرهای فعال وفاداری",
+   "number_card_name": "POL Active Offers"
+  },
+  {
+   "label": "پیام‌های ارسال‌شده",
+   "number_card_name": "POL Sent Messages"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "آفرهای فعال",
+   "link_to": "Loyalty Offer",
+   "stats_filter": "[[\"Loyalty Offer\",\"status\",\"=\",\"ACTIVE\"]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "label": "سناریوهای بازاریابی",
+   "link_to": "Mkt Scenario",
+   "stats_filter": "[[\"Mkt Scenario\",\"enabled\",\"=\",\"1\"]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "پیام‌های ارسالی",
+   "link_to": "Mkt Message Log",
+   "stats_filter": "[[\"Mkt Message Log\",\"status\",\"=\",\"SENT\"]]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "تنظیمات RFM",
+   "link_to": "RFM Settings",
+   "type": "DocType"
+  }
+ ],
+ "standard": 1,
+ "title": "POL CRM",
+ "type": "Workspace"
+}
