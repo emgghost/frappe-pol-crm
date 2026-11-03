@@ -19,6 +19,10 @@ build-backend = "flit_core.buildapi"
 [tool.bench]
 creator = "frappe"
 
+[tool.bench.frappe-dependencies]
+frappe = ">=16.0.0,<17.0.0"
+erpnext = ">=16.0.0,<17.0.0"
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["pol_crm/tests"]
