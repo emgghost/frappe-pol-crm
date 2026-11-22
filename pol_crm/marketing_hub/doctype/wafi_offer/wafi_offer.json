@@ -1,0 +1,336 @@
+{
+ "actions": [],
+ "autoname": "format:WOF-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "offer_title",
+  "tier",
+  "size",
+  "column_1",
+  "area",
+  "tile",
+  "section_1",
+  "offer_type",
+  "discount_percent",
+  "discount_amount",
+  "deal_text",
+  "free_item",
+  "special_price",
+  "original_price",
+  "column_2",
+  "applies_to",
+  "terms",
+  "image",
+  "section_2",
+  "start_date",
+  "column_3",
+  "end_date",
+  "section_3",
+  "status",
+  "total_price",
+  "paid",
+  "column_4",
+  "wallet_transaction",
+  "submitted_on",
+  "review_note",
+  "wafi_reference",
+  "section_4",
+  "views",
+  "opens",
+  "column_5",
+  "directions",
+  "calls",
+  "whatsapp_taps"
+ ],
+ "fields": [
+  {
+   "fieldname": "offer_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Offer Title",
+   "reqd": 1
+  },
+  {
+   "default": "Regular Pages (Free)",
+   "description": "Regular pages: up to 3 free active offers, one per size; more are charged per week. First Page: booked for 3 days, one merchant per tile, per area.",
+   "fieldname": "tier",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Placement",
+   "options": "Regular Pages (Free)\nFirst Page (Paid)",
+   "reqd": 1
+  },
+  {
+   "default": "Square",
+   "depends_on": "eval:doc.tier=='Regular Pages (Free)'",
+   "fieldname": "size",
+   "fieldtype": "Select",
+   "label": "Offer Size",
+   "options": "Square\nBanner\nLarge Tile"
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.tier=='First Page (Paid)'",
+   "fieldname": "area",
+   "fieldtype": "Select",
+   "label": "Area",
+   "mandatory_depends_on": "eval:doc.tier=='First Page (Paid)'",
+   "options": "\nKarrada\nMansour\nZayouna\nAdhamiya\nKadhimiya\nJadriya\nYarmouk\nHarthiya\nPalestine St\nDora"
+  },
+  {
+   "depends_on": "eval:doc.tier=='First Page (Paid)'",
+   "description": "Per 3-day booking: Square 5,000 · Banner 10,000 · Large Tile 15,000 IQD.",
+   "fieldname": "tile",
+   "fieldtype": "Select",
+   "label": "Tile",
+   "mandatory_depends_on": "eval:doc.tier=='First Page (Paid)'",
+   "options": "\nSquare 1\nSquare 2\nBanner\nSquare 3\nLarge Tile\nSquare 4"
+  },
+  {
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "The Deal"
+  },
+  {
+   "default": "% Discount",
+   "fieldname": "offer_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Offer Type",
+   "options": "% Discount\nFixed Discount\nBuy X Get Y\nFree Item\nSpecial Price",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='% Discount'",
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "Discount %"
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='Fixed Discount'",
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount (IQD)"
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='Buy X Get Y'",
+   "description": "e.g. Buy 2 shirts, get 1 free",
+   "fieldname": "deal_text",
+   "fieldtype": "Data",
+   "label": "The Deal"
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='Free Item'",
+   "fieldname": "free_item",
+   "fieldtype": "Data",
+   "label": "Free Item"
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='Special Price'",
+   "fieldname": "special_price",
+   "fieldtype": "Currency",
+   "label": "Special Price (IQD)"
+  },
+  {
+   "depends_on": "eval:doc.offer_type=='Special Price'",
+   "fieldname": "original_price",
+   "fieldtype": "Currency",
+   "label": "Original Price (IQD)"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Leave empty if it is on everything.",
+   "fieldname": "applies_to",
+   "fieldtype": "Data",
+   "label": "Applies To"
+  },
+  {
+   "fieldname": "terms",
+   "fieldtype": "Small Text",
+   "label": "Terms & Conditions"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "First Page bookings are exactly 3 days: the end date is set automatically.",
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Review & Payment"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nApproved\nLive\nCompleted\nRejected\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid",
+   "fieldtype": "Check",
+   "label": "Paid from Wallet",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "no_copy": 1,
+   "options": "Mkt Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Sent for Review On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_note",
+   "fieldtype": "Small Text",
+   "label": "Review Note",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "wafi_reference",
+   "fieldtype": "Data",
+   "label": "Wafi Reference",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_4",
+   "fieldtype": "Section Break",
+   "label": "Results"
+  },
+  {
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "label": "Views",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "opens",
+   "fieldtype": "Int",
+   "label": "Opens",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "directions",
+   "fieldtype": "Int",
+   "label": "Directions",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "calls",
+   "fieldtype": "Int",
+   "label": "Calls",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "whatsapp_taps",
+   "fieldtype": "Int",
+   "label": "WhatsApp Taps",
+   "no_copy": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Wafi Offer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "offer_title",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "offer_title"
+}

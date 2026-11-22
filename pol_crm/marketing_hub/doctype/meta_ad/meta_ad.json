@@ -1,0 +1,262 @@
+{
+ "actions": [],
+ "autoname": "format:MAD-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ad_name",
+  "ad_set",
+  "campaign",
+  "column_1",
+  "identity",
+  "source",
+  "status",
+  "section_1",
+  "post_platform",
+  "column_2",
+  "post_id",
+  "section_2",
+  "format",
+  "media",
+  "cards",
+  "column_3",
+  "primary_text",
+  "headline",
+  "hashtags",
+  "offer",
+  "section_3",
+  "cta",
+  "column_4",
+  "website_url",
+  "phone",
+  "section_4",
+  "meta_ad_id",
+  "column_5",
+  "meta_creative_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "ad_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ad Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ad_set",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Ad Set",
+   "options": "Meta Ad Set",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "ad_set.campaign",
+   "fieldname": "campaign",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Campaign",
+   "options": "Meta Ad Campaign",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Facebook page",
+   "fieldname": "identity",
+   "fieldtype": "Select",
+   "label": "Shown As",
+   "options": "Facebook page\nInstagram account"
+  },
+  {
+   "default": "New creative",
+   "fieldname": "source",
+   "fieldtype": "Select",
+   "label": "Creative",
+   "options": "New creative\nExisting post"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nActive\nPaused\nCompleted\nRejected",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.source=='Existing post'",
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Existing Post"
+  },
+  {
+   "default": "Instagram",
+   "fieldname": "post_platform",
+   "fieldtype": "Select",
+   "label": "Platform",
+   "options": "Facebook\nInstagram"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "post_id",
+   "fieldtype": "Data",
+   "label": "Post ID or Link"
+  },
+  {
+   "depends_on": "eval:doc.source=='New creative'",
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Creative"
+  },
+  {
+   "default": "Image",
+   "fieldname": "format",
+   "fieldtype": "Select",
+   "label": "Format",
+   "options": "Image\nVideo\nCarousel"
+  },
+  {
+   "depends_on": "eval:doc.format!='Carousel'",
+   "fieldname": "media",
+   "fieldtype": "Attach",
+   "label": "Image or Video"
+  },
+  {
+   "depends_on": "eval:doc.format=='Carousel'",
+   "fieldname": "cards",
+   "fieldtype": "Table",
+   "label": "Carousel Cards (2 to 10)",
+   "options": "Meta Ad Card"
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "primary_text",
+   "fieldtype": "Text",
+   "label": "Primary Text"
+  },
+  {
+   "fieldname": "headline",
+   "fieldtype": "Data",
+   "label": "Headline"
+  },
+  {
+   "fieldname": "hashtags",
+   "fieldtype": "Data",
+   "label": "Hashtags"
+  },
+  {
+   "default": "None",
+   "fieldname": "offer",
+   "fieldtype": "Select",
+   "label": "Offer",
+   "options": "None\nFree delivery\nDiscount"
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Button"
+  },
+  {
+   "default": "Send Message",
+   "fieldname": "cta",
+   "fieldtype": "Select",
+   "label": "Button",
+   "options": "Shop Now\nLearn More\nOrder Now\nSign Up\nSend Message\nSend WhatsApp Message\nCall Now\nGet Quote\nApply Now\nFollow"
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "website_url",
+   "fieldtype": "Data",
+   "label": "Website URL"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone Number"
+  },
+  {
+   "fieldname": "section_4",
+   "fieldtype": "Section Break",
+   "label": "Meta"
+  },
+  {
+   "fieldname": "meta_ad_id",
+   "fieldtype": "Data",
+   "label": "Meta Ad ID",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "meta_creative_id",
+   "fieldtype": "Data",
+   "label": "Meta Creative ID",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Meta Ad",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "ad_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "ad_name"
+}

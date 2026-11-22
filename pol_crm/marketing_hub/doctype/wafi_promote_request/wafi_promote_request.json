@@ -1,0 +1,233 @@
+{
+ "actions": [],
+ "autoname": "format:WPR-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "request_title",
+  "business_category",
+  "section_1",
+  "top_search",
+  "middle_search",
+  "category_highlight",
+  "column_1",
+  "map_pin",
+  "wider_radius",
+  "section_2",
+  "start_date",
+  "end_date",
+  "column_2",
+  "weeks",
+  "weekly_rate",
+  "section_3",
+  "status",
+  "total_price",
+  "paid",
+  "column_3",
+  "wallet_transaction",
+  "submitted_on",
+  "review_note",
+  "wafi_reference"
+ ],
+ "fields": [
+  {
+   "fieldname": "request_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "reqd": 1
+  },
+  {
+   "description": "Top Search, Category and Map have 3 slots per business category.",
+   "fieldname": "business_category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Business Category",
+   "options": "Restaurants\nClothing & Fashion\nElectronics\nBeauty & Personal Care\nHome & Furniture\nOther",
+   "reqd": 1
+  },
+  {
+   "description": "Each feature adds to the weekly price.",
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Visibility Features"
+  },
+  {
+   "default": "1",
+   "fieldname": "top_search",
+   "fieldtype": "Check",
+   "label": "Top Search (30,000 IQD/week)"
+  },
+  {
+   "fieldname": "middle_search",
+   "fieldtype": "Check",
+   "label": "Middle Search (15,000 IQD/week)"
+  },
+  {
+   "fieldname": "category_highlight",
+   "fieldtype": "Check",
+   "label": "Category (20,000 IQD/week)"
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "map_pin",
+   "fieldtype": "Check",
+   "label": "Map (25,000 IQD/week)"
+  },
+  {
+   "fieldname": "wider_radius",
+   "fieldtype": "Check",
+   "label": "Wider Radius (10,000 IQD/week)"
+  },
+  {
+   "description": "Minimum booking is 1 week.",
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Duration"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weeks",
+   "fieldtype": "Int",
+   "label": "Weeks",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "weekly_rate",
+   "fieldtype": "Currency",
+   "label": "Weekly Rate (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Review & Payment"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nApproved\nLive\nCompleted\nRejected\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid",
+   "fieldtype": "Check",
+   "label": "Paid from Wallet",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "no_copy": 1,
+   "options": "Mkt Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Sent for Review On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_note",
+   "fieldtype": "Small Text",
+   "label": "Review Note",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "wafi_reference",
+   "fieldtype": "Data",
+   "label": "Wafi Reference",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Wafi Promote Request",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "request_title",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "request_title"
+}

@@ -1,0 +1,336 @@
+{
+ "actions": [],
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_1",
+  "plan",
+  "club_enabled",
+  "column_1",
+  "points_redeem_level",
+  "section_2",
+  "max_recipients_per_send",
+  "skip_recent_days",
+  "column_2",
+  "conversion_window_days",
+  "section_3",
+  "whatsapp_message_price",
+  "gift_schedule",
+  "column_3",
+  "gift_months_granted",
+  "last_gift_month",
+  "section_4",
+  "whatsapp_phone_number_id",
+  "whatsapp_access_token",
+  "column_4",
+  "whatsapp_template_name",
+  "whatsapp_template_language",
+  "section_5",
+  "instagram_account_id",
+  "column_5",
+  "instagram_access_token",
+  "section_6",
+  "wafi_api_url",
+  "wafi_merchant_id",
+  "column_6",
+  "wafi_api_key",
+  "section_7",
+  "wafi_messages_path",
+  "wafi_promotions_path",
+  "column_7",
+  "wafi_notifications_path",
+  "wafi_status_path",
+  "section_8",
+  "meta_ad_account_id",
+  "meta_page_id",
+  "meta_pixel_id",
+  "column_8",
+  "meta_access_token",
+  "meta_account_currency",
+  "meta_exchange_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Plan"
+  },
+  {
+   "default": "Free",
+   "description": "Pro unlocks Meta Ads and the Meta Ads report.",
+   "fieldname": "plan",
+   "fieldtype": "Select",
+   "label": "Marketing Plan",
+   "options": "Free\nPro"
+  },
+  {
+   "description": "Unlocks club tiers and points in campaigns and automations.",
+   "fieldname": "club_enabled",
+   "fieldtype": "Check",
+   "label": "Club Subscription Active"
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "100",
+   "description": "Points a customer needs before the Usable Points reminder is sent.",
+   "fieldname": "points_redeem_level",
+   "fieldtype": "Int",
+   "label": "Points Redeem Level"
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Sending Limits"
+  },
+  {
+   "default": "1000",
+   "fieldname": "max_recipients_per_send",
+   "fieldtype": "Int",
+   "label": "Max Recipients per Send"
+  },
+  {
+   "default": "7",
+   "fieldname": "skip_recent_days",
+   "fieldtype": "Int",
+   "label": "Skip Customers Messaged in the Last (Days)"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "14",
+   "fieldname": "conversion_window_days",
+   "fieldtype": "Int",
+   "label": "Count a Purchase as a Result Within (Days)"
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Marketing Wallet"
+  },
+  {
+   "default": "30",
+   "fieldname": "whatsapp_message_price",
+   "fieldtype": "Currency",
+   "label": "WhatsApp Price per Message (IQD)"
+  },
+  {
+   "default": "50000,25000,25000",
+   "description": "Comma separated: one amount per month. Gift credit expires at the end of its month and is spent first.",
+   "fieldname": "gift_schedule",
+   "fieldtype": "Data",
+   "label": "Welcome Gift per Month (IQD)"
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gift_months_granted",
+   "fieldtype": "Int",
+   "label": "Gift Months Granted",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_gift_month",
+   "fieldtype": "Data",
+   "label": "Last Gift Month",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_4",
+   "fieldtype": "Section Break",
+   "label": "WhatsApp Cloud API"
+  },
+  {
+   "fieldname": "whatsapp_phone_number_id",
+   "fieldtype": "Data",
+   "label": "Phone Number ID"
+  },
+  {
+   "fieldname": "whatsapp_access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "If set, messages are sent through this template with the text as its first body variable.",
+   "fieldname": "whatsapp_template_name",
+   "fieldtype": "Data",
+   "label": "Approved Template Name"
+  },
+  {
+   "default": "ar",
+   "fieldname": "whatsapp_template_language",
+   "fieldtype": "Data",
+   "label": "Template Language"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_5",
+   "fieldtype": "Section Break",
+   "label": "Instagram Messaging"
+  },
+  {
+   "fieldname": "instagram_account_id",
+   "fieldtype": "Data",
+   "label": "Instagram Account ID"
+  },
+  {
+   "fieldname": "column_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "instagram_access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_6",
+   "fieldtype": "Section Break",
+   "label": "Wafi App"
+  },
+  {
+   "fieldname": "wafi_api_url",
+   "fieldtype": "Data",
+   "label": "Wafi API URL"
+  },
+  {
+   "fieldname": "wafi_merchant_id",
+   "fieldtype": "Data",
+   "label": "Merchant ID"
+  },
+  {
+   "fieldname": "column_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wafi_api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "collapsible": 1,
+   "description": "Paths on the Wafi API, joined to the Wafi API URL. Change them to match Wafi's API documentation.",
+   "fieldname": "section_7",
+   "fieldtype": "Section Break",
+   "label": "Wafi API Paths"
+  },
+  {
+   "default": "messages",
+   "fieldname": "wafi_messages_path",
+   "fieldtype": "Data",
+   "label": "Send a Message"
+  },
+  {
+   "default": "promotions",
+   "fieldname": "wafi_promotions_path",
+   "fieldtype": "Data",
+   "label": "Submit an Ad, Offer or Promote Request"
+  },
+  {
+   "fieldname": "column_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "notifications/send",
+   "fieldname": "wafi_notifications_path",
+   "fieldtype": "Data",
+   "label": "Send a Notification"
+  },
+  {
+   "default": "promotions/{reference}",
+   "description": "{reference} is replaced with the Wafi reference of the request.",
+   "fieldname": "wafi_status_path",
+   "fieldtype": "Data",
+   "label": "Read a Request's Review Status"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_8",
+   "fieldtype": "Section Break",
+   "label": "Meta Ads"
+  },
+  {
+   "description": "The number after act_ in Ads Manager.",
+   "fieldname": "meta_ad_account_id",
+   "fieldtype": "Data",
+   "label": "Ad Account ID"
+  },
+  {
+   "fieldname": "meta_page_id",
+   "fieldtype": "Data",
+   "label": "Facebook Page ID"
+  },
+  {
+   "description": "Only needed for ad sets optimized for Purchases.",
+   "fieldname": "meta_pixel_id",
+   "fieldtype": "Data",
+   "label": "Pixel ID"
+  },
+  {
+   "fieldname": "column_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "A system-user token with ads_management, pages_read_engagement and business_management.",
+   "fieldname": "meta_access_token",
+   "fieldtype": "Password",
+   "label": "Access Token"
+  },
+  {
+   "default": "USD",
+   "description": "Meta bills in the ad account's currency, not IQD.",
+   "fieldname": "meta_account_currency",
+   "fieldtype": "Data",
+   "label": "Ad Account Currency"
+  },
+  {
+   "description": "Budgets are typed in IQD and converted with this rate when sent to Meta. Leave empty if the account itself is in IQD.",
+   "fieldname": "meta_exchange_rate",
+   "fieldtype": "Float",
+   "label": "IQD per 1 Unit of the Account Currency"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Marketing Hub Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Marketing Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

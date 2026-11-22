@@ -1,0 +1,305 @@
+{
+ "actions": [],
+ "autoname": "format:WNT-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "notification_title",
+  "message",
+  "column_1",
+  "notification_type",
+  "image",
+  "section_1",
+  "city_wide",
+  "specific_town",
+  "governorate",
+  "city",
+  "column_2",
+  "by_radius",
+  "latitude",
+  "longitude",
+  "radius_m",
+  "section_2",
+  "age_from",
+  "age_to",
+  "column_3",
+  "gender",
+  "section_3",
+  "send_mode",
+  "column_4",
+  "scheduled_at",
+  "section_4",
+  "status",
+  "total_price",
+  "paid",
+  "column_5",
+  "wallet_transaction",
+  "submitted_on",
+  "review_note",
+  "wafi_reference",
+  "sent_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "notification_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "description": "Push notifications are usually cut off after about 40 characters on the lock screen.",
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "label": "Message",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "In-App Notification",
+   "fieldname": "notification_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Notification Type",
+   "options": "In-App Notification\nPush Notification",
+   "reqd": 1
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
+   "description": "Combine any of these: they are not exclusive.",
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Audience"
+  },
+  {
+   "default": "1",
+   "fieldname": "city_wide",
+   "fieldtype": "Check",
+   "label": "City-wide"
+  },
+  {
+   "fieldname": "specific_town",
+   "fieldtype": "Check",
+   "label": "Specific Town"
+  },
+  {
+   "depends_on": "specific_town",
+   "fieldname": "governorate",
+   "fieldtype": "Select",
+   "label": "Governorate",
+   "mandatory_depends_on": "specific_town",
+   "options": "\nBaghdad\nBasra\nNineveh\nErbil\nNajaf\nKarbala\nSulaymaniyah\nDhi Qar\nAnbar\nDiyala\nKirkuk\nBabil\nWasit\nMaysan\nSalah al-Din\nAl-Qadisiyyah\nAl-Muthanna\nDohuk"
+  },
+  {
+   "depends_on": "specific_town",
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "by_radius",
+   "fieldtype": "Check",
+   "label": "Radius from a Point on the Map"
+  },
+  {
+   "depends_on": "by_radius",
+   "fieldname": "latitude",
+   "fieldtype": "Float",
+   "label": "Latitude",
+   "precision": "6"
+  },
+  {
+   "depends_on": "by_radius",
+   "fieldname": "longitude",
+   "fieldtype": "Float",
+   "label": "Longitude",
+   "precision": "6"
+  },
+  {
+   "default": "1000",
+   "depends_on": "by_radius",
+   "description": "In metres.",
+   "fieldname": "radius_m",
+   "fieldtype": "Select",
+   "label": "Radius",
+   "options": "400\n1000\n5000\n15000"
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "18",
+   "fieldname": "age_from",
+   "fieldtype": "Int",
+   "label": "Age From"
+  },
+  {
+   "default": "65",
+   "fieldname": "age_to",
+   "fieldtype": "Int",
+   "label": "Age To"
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "All",
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "All\nWomen\nMen"
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Schedule"
+  },
+  {
+   "default": "Now",
+   "fieldname": "send_mode",
+   "fieldtype": "Select",
+   "label": "Send",
+   "options": "Now\nSchedule"
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.send_mode=='Schedule'",
+   "fieldname": "scheduled_at",
+   "fieldtype": "Datetime",
+   "label": "Send At",
+   "mandatory_depends_on": "eval:doc.send_mode=='Schedule'"
+  },
+  {
+   "fieldname": "section_4",
+   "fieldtype": "Section Break",
+   "label": "Review & Payment"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nApproved\nLive\nCompleted\nRejected\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid",
+   "fieldtype": "Check",
+   "label": "Paid from Wallet",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "no_copy": 1,
+   "options": "Mkt Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Sent for Review On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_note",
+   "fieldtype": "Small Text",
+   "label": "Review Note",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "wafi_reference",
+   "fieldtype": "Data",
+   "label": "Wafi Reference",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sent_on",
+   "fieldtype": "Datetime",
+   "label": "Sent On",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Wafi Notification",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "notification_title",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "notification_title"
+}

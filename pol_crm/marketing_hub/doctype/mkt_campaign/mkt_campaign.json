@@ -1,0 +1,470 @@
+{
+ "actions": [],
+ "autoname": "format:CMP-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "campaign_name",
+  "campaign_type",
+  "column_1",
+  "status",
+  "scheduled_at",
+  "template_id",
+  "section_1",
+  "event_name",
+  "event_datetime",
+  "column_2",
+  "event_place",
+  "section_2",
+  "last_purchase",
+  "purchase_count",
+  "new_customers_only",
+  "min_spend",
+  "activity_segments",
+  "club_tiers",
+  "column_3",
+  "governorates",
+  "skip_recently_messaged",
+  "estimated_recipients",
+  "section_3",
+  "channel",
+  "content_type",
+  "media",
+  "send_times",
+  "column_4",
+  "message",
+  "offer",
+  "discount_percent",
+  "section_4",
+  "reminder_enabled",
+  "reminder_message",
+  "column_5",
+  "thanks_enabled",
+  "thanks_message",
+  "section_5",
+  "also_create_meta_ad",
+  "section_6",
+  "recipients_count",
+  "sent_count",
+  "skipped_count",
+  "cost",
+  "column_6",
+  "sent_at",
+  "last_send_at",
+  "repeats_done",
+  "reminder_sent",
+  "thanks_sent",
+  "column_7",
+  "purchases_after",
+  "revenue_after",
+  "meta_ad_campaign",
+  "failure_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "campaign_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Campaign Name",
+   "reqd": 1
+  },
+  {
+   "default": "All Customers",
+   "description": "All Customers: pick who with filters. By Segment: activity, club tier and governorate. Retention: reward club members. Event Invitation: invitation, reminder and thank-you.",
+   "fieldname": "campaign_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Send To",
+   "options": "All Customers\nBy Segment\nRetention\nEvent Invitation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nScheduled\nSending\nSent\nCancelled\nFailed",
+   "read_only": 1
+  },
+  {
+   "description": "Leave empty to send when you press Send Now.",
+   "fieldname": "scheduled_at",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Schedule"
+  },
+  {
+   "fieldname": "template_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Template",
+   "no_copy": 1
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Event"
+  },
+  {
+   "fieldname": "event_name",
+   "fieldtype": "Data",
+   "label": "Event Name",
+   "mandatory_depends_on": "eval:doc.campaign_type=='Event Invitation'"
+  },
+  {
+   "fieldname": "event_datetime",
+   "fieldtype": "Datetime",
+   "label": "Event Date & Time",
+   "mandatory_depends_on": "eval:doc.campaign_type=='Event Invitation'"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "event_place",
+   "fieldtype": "Data",
+   "label": "Place"
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Who Gets It"
+  },
+  {
+   "default": "In the last 30 days",
+   "depends_on": "eval:in_list(['All Customers','Event Invitation'], doc.campaign_type)",
+   "fieldname": "last_purchase",
+   "fieldtype": "Select",
+   "label": "Last Purchase",
+   "options": "Any time\nIn the last 7 days\nIn the last 30 days\nIn the last 90 days\nNot in 30+ days\nNot in 45+ days\nNot in 60+ days"
+  },
+  {
+   "default": "Any",
+   "depends_on": "eval:in_list(['All Customers','Event Invitation'], doc.campaign_type)",
+   "fieldname": "purchase_count",
+   "fieldtype": "Select",
+   "label": "Number of Purchases",
+   "options": "Any\nBought once\nMore than once\n5+ times"
+  },
+  {
+   "depends_on": "eval:in_list(['All Customers','Event Invitation'], doc.campaign_type)",
+   "fieldname": "new_customers_only",
+   "fieldtype": "Check",
+   "label": "Only New Customers (first purchase in the last 30 days)"
+  },
+  {
+   "depends_on": "eval:in_list(['All Customers','Event Invitation'], doc.campaign_type)",
+   "fieldname": "min_spend",
+   "fieldtype": "Currency",
+   "label": "Minimum Total Spend (IQD)"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='By Segment'",
+   "description": "Comma separated: Very Active, Active, New Lead, Re-engage, No Activity",
+   "fieldname": "activity_segments",
+   "fieldtype": "Small Text",
+   "label": "Activity"
+  },
+  {
+   "depends_on": "eval:in_list(['By Segment','Retention'], doc.campaign_type)",
+   "description": "Comma separated loyalty tiers, e.g. Gold, Platinum. Needs the Club subscription.",
+   "fieldname": "club_tiers",
+   "fieldtype": "Small Text",
+   "label": "Club Tiers"
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Comma separated. Leave empty for all of Iraq.",
+   "fieldname": "governorates",
+   "fieldtype": "Small Text",
+   "label": "Governorates"
+  },
+  {
+   "default": "1",
+   "fieldname": "skip_recently_messaged",
+   "fieldtype": "Check",
+   "label": "Skip Customers Who Got a Message Recently"
+  },
+  {
+   "fieldname": "estimated_recipients",
+   "fieldtype": "Int",
+   "label": "Recipients (estimate)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Message"
+  },
+  {
+   "default": "WhatsApp",
+   "description": "WhatsApp is charged per message from the Marketing Wallet. Instagram only reaches customers who messaged you in the last 24 hours.",
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Channel",
+   "options": "WhatsApp\nInstagram DM\nWafi App\nSMS\nTelegram",
+   "reqd": 1
+  },
+  {
+   "default": "Message",
+   "fieldname": "content_type",
+   "fieldtype": "Select",
+   "label": "Content Type",
+   "options": "Message\nPhoto\nVideo"
+  },
+  {
+   "depends_on": "eval:doc.content_type!='Message'",
+   "fieldname": "media",
+   "fieldtype": "Attach",
+   "label": "Photo or Video"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:doc.campaign_type!='Event Invitation'",
+   "description": "2 or 3: sent again 2 days apart to customers who have not bought yet.",
+   "fieldname": "send_times",
+   "fieldtype": "Select",
+   "label": "How Many Times",
+   "options": "1\n2\n3"
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Placeholders: {name}, {code}, {discount}, {event}, {date}, {time}, {place}",
+   "fieldname": "message",
+   "fieldtype": "Text",
+   "label": "Message",
+   "reqd": 1
+  },
+  {
+   "default": "None",
+   "fieldname": "offer",
+   "fieldtype": "Select",
+   "label": "Offer",
+   "options": "None\nFree delivery\nDiscount"
+  },
+  {
+   "depends_on": "eval:doc.offer=='Discount'",
+   "description": "Put {code} in the message to give each customer a single-use coupon.",
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "Discount %"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "section_4",
+   "fieldtype": "Section Break",
+   "label": "Event Follow-ups"
+  },
+  {
+   "default": "1",
+   "fieldname": "reminder_enabled",
+   "fieldtype": "Check",
+   "label": "Reminder 1 Day Before"
+  },
+  {
+   "default": "Reminder: {event} is tomorrow at {time}. See you there!",
+   "depends_on": "reminder_enabled",
+   "fieldname": "reminder_message",
+   "fieldtype": "Small Text",
+   "label": "Reminder Message"
+  },
+  {
+   "fieldname": "column_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "thanks_enabled",
+   "fieldtype": "Check",
+   "label": "Thank-you 1 Day After"
+  },
+  {
+   "default": "Thank you for coming! It was great to see you.",
+   "depends_on": "thanks_enabled",
+   "fieldname": "thanks_message",
+   "fieldtype": "Small Text",
+   "label": "Thank-you Message"
+  },
+  {
+   "fieldname": "section_5",
+   "fieldtype": "Section Break",
+   "label": "After Sending"
+  },
+  {
+   "description": "After sending, a draft Meta ad is created with this message as the ad text. The ad is paid separately.",
+   "fieldname": "also_create_meta_ad",
+   "fieldtype": "Check",
+   "label": "Also Reach New People with a Meta Ad"
+  },
+  {
+   "fieldname": "section_6",
+   "fieldtype": "Section Break",
+   "label": "Results"
+  },
+  {
+   "fieldname": "recipients_count",
+   "fieldtype": "Int",
+   "label": "Recipients",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sent_count",
+   "fieldtype": "Int",
+   "label": "Sent",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "skipped_count",
+   "fieldtype": "Int",
+   "label": "Skipped / Failed",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Currency",
+   "label": "Cost (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sent_at",
+   "fieldtype": "Datetime",
+   "label": "Sent At",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_send_at",
+   "fieldtype": "Datetime",
+   "label": "Last Send",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "repeats_done",
+   "fieldtype": "Int",
+   "label": "Repeat Sends Done",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "reminder_sent",
+   "fieldtype": "Check",
+   "label": "Reminder Sent",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "thanks_sent",
+   "fieldtype": "Check",
+   "label": "Thank-you Sent",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchases_after",
+   "fieldtype": "Int",
+   "label": "Customers Who Bought After",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "revenue_after",
+   "fieldtype": "Currency",
+   "label": "Revenue After (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "meta_ad_campaign",
+   "fieldtype": "Link",
+   "label": "Meta Ad Draft",
+   "no_copy": 1,
+   "options": "Meta Ad Campaign",
+   "read_only": 1
+  },
+  {
+   "fieldname": "failure_reason",
+   "fieldtype": "Small Text",
+   "label": "Failure Reason",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "is_calendar_and_gantt": 1,
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Mkt Campaign",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "campaign_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "campaign_name"
+}

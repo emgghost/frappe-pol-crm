@@ -1,0 +1,197 @@
+{
+ "actions": [],
+ "autoname": "format:WAD-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ad_title",
+  "placements",
+  "section_1",
+  "gross_price",
+  "column_1",
+  "discount",
+  "section_2",
+  "status",
+  "total_price",
+  "paid",
+  "column_2",
+  "wallet_transaction",
+  "submitted_on",
+  "review_note",
+  "wafi_reference",
+  "section_3",
+  "views",
+  "column_3",
+  "taps"
+ ],
+ "fields": [
+  {
+   "fieldname": "ad_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ad Name",
+   "reqd": 1
+  },
+  {
+   "description": "Minimum booking is 5 days per banner. Prices are per 5 days: Search 15,000 · Homepage 35,000 · Offers Center 25,000 · Club 15,000 IQD. Booking all four gives 20% off.",
+   "fieldname": "placements",
+   "fieldtype": "Table",
+   "label": "Ad Placements",
+   "options": "Wafi Ad Placement",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Price"
+  },
+  {
+   "fieldname": "gross_price",
+   "fieldtype": "Currency",
+   "label": "Subtotal (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Currency",
+   "label": "All-Banners Discount (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Review & Payment"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nApproved\nLive\nCompleted\nRejected\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "paid",
+   "fieldtype": "Check",
+   "label": "Paid from Wallet",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "no_copy": 1,
+   "options": "Mkt Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Sent for Review On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_note",
+   "fieldtype": "Small Text",
+   "label": "Review Note",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "wafi_reference",
+   "fieldtype": "Data",
+   "label": "Wafi Reference",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Results"
+  },
+  {
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "label": "Views",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "taps",
+   "fieldtype": "Int",
+   "label": "Taps",
+   "no_copy": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Wafi Ad",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "ad_title",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "ad_title"
+}

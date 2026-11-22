@@ -1,0 +1,225 @@
+{
+ "actions": [],
+ "autoname": "format:MAC-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "campaign_name",
+  "kind",
+  "objective",
+  "column_1",
+  "status",
+  "special_ad_category",
+  "meta_campaign_id",
+  "rejection_reason",
+  "section_1",
+  "total_budget",
+  "wafi_budget",
+  "column_2",
+  "est_impressions",
+  "est_clicks",
+  "section_2",
+  "spend",
+  "impressions",
+  "clicks",
+  "column_3",
+  "results_count",
+  "purchases",
+  "revenue"
+ ],
+ "fields": [
+  {
+   "fieldname": "campaign_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Campaign Name",
+   "reqd": 1
+  },
+  {
+   "default": "Campaign",
+   "description": "Boost promotes an existing post. Ad is one ad from scratch. Campaign is Campaign → Ad Set → Ad.",
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Kind",
+   "options": "Campaign\nAd\nBoost",
+   "reqd": 1
+  },
+  {
+   "default": "Engagement",
+   "fieldname": "objective",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Objective",
+   "options": "Awareness\nTraffic\nEngagement\nLeads\nSales",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nActive\nPaused\nCompleted\nRejected",
+   "read_only": 1
+  },
+  {
+   "default": "None",
+   "description": "Selecting a category applies Meta's targeting restrictions: no age, gender or precise location targeting.",
+   "fieldname": "special_ad_category",
+   "fieldtype": "Select",
+   "label": "Special Ad Category",
+   "options": "None\nCredit\nEmployment\nHousing\nSocial Issues"
+  },
+  {
+   "fieldname": "meta_campaign_id",
+   "fieldtype": "Data",
+   "label": "Meta Campaign ID",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Small Text",
+   "label": "Rejection Reason",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Budget"
+  },
+  {
+   "fieldname": "total_budget",
+   "fieldtype": "Currency",
+   "label": "Total Budget on Meta (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "wafi_budget",
+   "fieldtype": "Currency",
+   "label": "Wafi App Budget (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "est_impressions",
+   "fieldtype": "Int",
+   "label": "Estimated Impressions",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "est_clicks",
+   "fieldtype": "Int",
+   "label": "Estimated Link Clicks",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Results"
+  },
+  {
+   "fieldname": "spend",
+   "fieldtype": "Currency",
+   "label": "Spend (IQD)",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "impressions",
+   "fieldtype": "Int",
+   "label": "Impressions",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "clicks",
+   "fieldtype": "Int",
+   "label": "Clicks",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Messages, followers, calls or leads, depending on the objective.",
+   "fieldname": "results_count",
+   "fieldtype": "Int",
+   "label": "Results",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "purchases",
+   "fieldtype": "Int",
+   "label": "Purchases",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "revenue",
+   "fieldtype": "Currency",
+   "label": "Revenue (IQD)",
+   "no_copy": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Meta Ad Campaign",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "campaign_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "campaign_name"
+}

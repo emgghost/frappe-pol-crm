@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "autoname": "field:occasion_name",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "occasion_name",
+  "occasion_date",
+  "column_1",
+  "repeats_yearly",
+  "enabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "occasion_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Occasion",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Set the next date. Occasions on the Hijri calendar need a new date every year.",
+   "fieldname": "occasion_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Next Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "For fixed Gregorian dates, e.g. New Year. The date moves forward by itself.",
+   "fieldname": "repeats_yearly",
+   "fieldtype": "Check",
+   "label": "Same Date Every Year"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Mkt Occasion",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

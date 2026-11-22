@@ -1,0 +1,295 @@
+{
+ "actions": [],
+ "autoname": "format:MAS-{#####}",
+ "creation": "2026-11-14 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ad_set_name",
+  "campaign",
+  "column_1",
+  "optimization_goal",
+  "destination",
+  "section_1",
+  "audience_mode",
+  "governorates",
+  "gender",
+  "column_2",
+  "age_from",
+  "age_to",
+  "interests",
+  "custom_audience",
+  "section_2",
+  "placement_facebook",
+  "placement_instagram",
+  "column_3",
+  "placement_whatsapp",
+  "placement_wafi",
+  "wafi_daily_budget",
+  "section_3",
+  "daily_budget",
+  "start_date",
+  "end_date",
+  "column_4",
+  "days",
+  "total_budget",
+  "est_impressions",
+  "est_clicks",
+  "status",
+  "meta_adset_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "ad_set_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ad Set Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "campaign",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Campaign",
+   "options": "Meta Ad Campaign",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Must fit the campaign objective. Left empty, the objective's default is used.",
+   "fieldname": "optimization_goal",
+   "fieldtype": "Select",
+   "label": "Optimize For",
+   "options": "\nReach\nImpressions\nLink clicks\nLanding page views\nConversations\nPost engagement\nLeads\nPurchases"
+  },
+  {
+   "default": "Messages",
+   "fieldname": "destination",
+   "fieldtype": "Select",
+   "label": "Destination",
+   "options": "No button destination\nWebsite\nMessages\nPhone call\nInstant form"
+  },
+  {
+   "fieldname": "section_1",
+   "fieldtype": "Section Break",
+   "label": "Audience"
+  },
+  {
+   "default": "Advantage+ Audience",
+   "description": "Advantage+ adjusts over time across all Iraq, age 18–65+.",
+   "fieldname": "audience_mode",
+   "fieldtype": "Select",
+   "label": "Audience",
+   "options": "Advantage+ Audience\nManual targeting"
+  },
+  {
+   "depends_on": "eval:doc.audience_mode=='Manual targeting'",
+   "description": "Comma separated.",
+   "fieldname": "governorates",
+   "fieldtype": "Small Text",
+   "label": "Governorates"
+  },
+  {
+   "default": "All",
+   "depends_on": "eval:doc.audience_mode=='Manual targeting'",
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "All\nWomen\nMen"
+  },
+  {
+   "fieldname": "column_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "18",
+   "depends_on": "eval:doc.audience_mode=='Manual targeting'",
+   "fieldname": "age_from",
+   "fieldtype": "Int",
+   "label": "Age From"
+  },
+  {
+   "default": "65",
+   "depends_on": "eval:doc.audience_mode=='Manual targeting'",
+   "fieldname": "age_to",
+   "fieldtype": "Int",
+   "label": "Age To"
+  },
+  {
+   "description": "Comma separated, e.g. Fashion, Shopping, Beauty",
+   "fieldname": "interests",
+   "fieldtype": "Small Text",
+   "label": "Interests"
+  },
+  {
+   "default": "None",
+   "fieldname": "custom_audience",
+   "fieldtype": "Select",
+   "label": "Custom Audience",
+   "options": "None\nPeople who engaged with your Facebook page\nPeople who engaged with your Instagram\nYour customer list\nLookalike of your customers"
+  },
+  {
+   "fieldname": "section_2",
+   "fieldtype": "Section Break",
+   "label": "Placements"
+  },
+  {
+   "default": "1",
+   "fieldname": "placement_facebook",
+   "fieldtype": "Check",
+   "label": "Facebook"
+  },
+  {
+   "default": "1",
+   "fieldname": "placement_instagram",
+   "fieldtype": "Check",
+   "label": "Instagram"
+  },
+  {
+   "fieldname": "column_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "placement_whatsapp",
+   "fieldtype": "Check",
+   "label": "WhatsApp Status"
+  },
+  {
+   "fieldname": "placement_wafi",
+   "fieldtype": "Check",
+   "label": "Wafi App"
+  },
+  {
+   "depends_on": "placement_wafi",
+   "fieldname": "wafi_daily_budget",
+   "fieldtype": "Currency",
+   "label": "Wafi App Daily Budget (IQD)"
+  },
+  {
+   "fieldname": "section_3",
+   "fieldtype": "Section Break",
+   "label": "Budget & Schedule"
+  },
+  {
+   "default": "5000",
+   "description": "1,000 to 200,000 IQD.",
+   "fieldname": "daily_budget",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Daily Budget (IQD)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Int",
+   "label": "Days",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_budget",
+   "fieldtype": "Currency",
+   "label": "Total (IQD)",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "est_impressions",
+   "fieldtype": "Int",
+   "label": "Estimated Impressions",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "est_clicks",
+   "fieldtype": "Int",
+   "label": "Estimated Link Clicks",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nIn Review\nActive\nPaused\nCompleted\nRejected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "meta_adset_id",
+   "fieldtype": "Data",
+   "label": "Meta Ad Set ID",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "is_calendar_and_gantt": 1,
+ "links": [],
+ "modified": "2026-11-14 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Meta Ad Set",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Marketing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "search_fields": "ad_set_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "ad_set_name"
+}
