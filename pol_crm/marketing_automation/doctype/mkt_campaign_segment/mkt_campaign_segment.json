@@ -1,0 +1,30 @@
+{
+ "actions": [],
+ "creation": "2026-11-23 18:30:00.000000",
+ "modified": "2026-11-23 18:30:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "istable": 1,
+ "editable_grid": 1,
+ "module": "Marketing Automation",
+ "name": "Mkt Campaign Segment",
+ "field_order": [
+  "segment"
+ ],
+ "fields": [
+  {
+   "fieldname": "segment",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "گروه مشتری (RFM)",
+   "options": "CHAMPIONS\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nAT_RISK\nCANT_LOSE\nHIBERNATING\nLOST",
+   "reqd": 1
+  }
+ ],
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

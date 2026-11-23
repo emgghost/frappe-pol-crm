@@ -1,0 +1,32 @@
+# Persian names for the POL CRM doctypes and modules that the desk shows in English.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fa\n"
+
+msgid "Mkt Campaign"
+msgstr "کمپین"
+
+msgid "Mkt Campaign Segment"
+msgstr "گروه مخاطب کمپین"
+
+msgid "Mkt Scenario"
+msgstr "اتوماسیون"
+
+msgid "Mkt Message Log"
+msgstr "تاریخچه‌ی پیام‌ها"
+
+msgid "Messaging Settings"
+msgstr "تنظیمات پیام‌رسانی"
+
+msgid "Loyalty Offer"
+msgstr "کد تخفیف و آفر"
+
+msgid "RFM Settings"
+msgstr "تنظیمات RFM"
+
+msgid "Marketing Automation"
+msgstr "بازاریابی خودکار"
+
+msgid "Messaging"
+msgstr "پیام‌رسانی"

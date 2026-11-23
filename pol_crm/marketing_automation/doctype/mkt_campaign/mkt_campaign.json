@@ -1,0 +1,254 @@
+{
+ "actions": [],
+ "autoname": "format:CMP-{#####}",
+ "creation": "2026-11-23 18:30:00.000000",
+ "modified": "2026-11-23 18:30:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "module": "Marketing Automation",
+ "name": "Mkt Campaign",
+ "title_field": "campaign_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "campaign_name,status",
+ "field_order": [
+  "campaign_name",
+  "column_break_head",
+  "status",
+  "section_who",
+  "segments",
+  "customer_group",
+  "column_break_who",
+  "last_purchase",
+  "last_purchase_days",
+  "min_purchase_count",
+  "min_total_spent",
+  "audience_count",
+  "section_what",
+  "channel",
+  "message",
+  "column_break_what",
+  "discount_percent",
+  "code_valid_days",
+  "section_when",
+  "send_at",
+  "column_break_when",
+  "suggested_time",
+  "section_result",
+  "sent_count",
+  "postponed_count",
+  "column_break_result",
+  "skipped_count",
+  "failed_count",
+  "sent_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "campaign_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "عنوان کمپین",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "وضعیت",
+   "options": "Draft\nScheduled\nSending\nSent\nCancelled",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "section_who",
+   "fieldtype": "Section Break",
+   "label": "۱. چه کسی؟"
+  },
+  {
+   "fieldname": "segments",
+   "fieldtype": "Table",
+   "label": "فقط این گروه‌ها",
+   "options": "Mkt Campaign Segment",
+   "description": "خالی یعنی همه‌ی گروه‌ها."
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "گروه مشتری (ERPNext)",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "column_break_who",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "ANY_TIME",
+   "fieldname": "last_purchase",
+   "fieldtype": "Select",
+   "label": "آخرین خرید",
+   "options": "ANY_TIME\nBOUGHT_WITHIN\nNOT_BOUGHT_WITHIN"
+  },
+  {
+   "depends_on": "eval:doc.last_purchase!='ANY_TIME'",
+   "fieldname": "last_purchase_days",
+   "fieldtype": "Int",
+   "label": "روز",
+   "default": "90"
+  },
+  {
+   "fieldname": "min_purchase_count",
+   "fieldtype": "Int",
+   "label": "حداقل تعداد خرید"
+  },
+  {
+   "fieldname": "min_total_spent",
+   "fieldtype": "Currency",
+   "label": "حداقل جمع خرید"
+  },
+  {
+   "fieldname": "audience_count",
+   "fieldtype": "Int",
+   "label": "تعداد مخاطبان",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "section_what",
+   "fieldtype": "Section Break",
+   "label": "۲. چه پیامی؟"
+  },
+  {
+   "default": "SMS",
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "label": "از چه راهی",
+   "options": "SMS\nTELEGRAM",
+   "in_list_view": 1
+  },
+  {
+   "description": "می‌توانید بنویسید: {name} نام مشتری، {code} کد تخفیف، {discount} درصد تخفیف، {expiry} تاریخ انقضای کد.",
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "label": "متن پیام",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_what",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "کد تخفیف (درصد)",
+   "description": "اگر صفر باشد کد تخفیف ساخته نمی‌شود."
+  },
+  {
+   "depends_on": "eval:doc.discount_percent",
+   "fieldname": "code_valid_days",
+   "fieldtype": "Int",
+   "label": "اعتبار کد (روز)",
+   "default": "7"
+  },
+  {
+   "fieldname": "section_when",
+   "fieldtype": "Section Break",
+   "label": "۳. چه زمانی؟"
+  },
+  {
+   "fieldname": "send_at",
+   "fieldtype": "Datetime",
+   "label": "زمان ارسال",
+   "in_list_view": 1,
+   "description": "خالی بگذارید تا با زدن «ارسال» همان لحظه فرستاده شود. پیامی که در ساعت سکوت برسد، صبح فرستاده می‌شود."
+  },
+  {
+   "fieldname": "column_break_when",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "suggested_time",
+   "fieldtype": "Data",
+   "label": "زمان پیشنهادی",
+   "read_only": 1,
+   "depends_on": "suggested_time"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:['Sending','Sent'].includes(doc.status)",
+   "fieldname": "section_result",
+   "fieldtype": "Section Break",
+   "label": "نتیجه"
+  },
+  {
+   "fieldname": "sent_count",
+   "fieldtype": "Int",
+   "label": "ارسال شد",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "postponed_count",
+   "fieldtype": "Int",
+   "label": "به صبح موکول شد",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_break_result",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "skipped_count",
+   "fieldtype": "Int",
+   "label": "رد شد",
+   "read_only": 1,
+   "no_copy": 1,
+   "description": "مثلاً شماره‌ی نامعتبر، انصراف از پیامک یا رسیدن به سقف روزانه."
+  },
+  {
+   "fieldname": "failed_count",
+   "fieldtype": "Int",
+   "label": "خطا",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "sent_on",
+   "fieldtype": "Datetime",
+   "label": "پایان ارسال",
+   "read_only": 1,
+   "no_copy": 1
+  }
+ ],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "Marketing Manager",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales Manager"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

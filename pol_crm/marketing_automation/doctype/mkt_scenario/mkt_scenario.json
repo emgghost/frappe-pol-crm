@@ -1,119 +1,211 @@
 {
-  "actions": [],
-  "allow_rename": 0,
-  "autoname": "format:SCN-{#####}",
-  "creation": "2026-10-17 12:00:00.000000",
-  "doctype": "DocType",
-  "engine": "InnoDB",
-  "title_field": "scenario_name",
-  "search_fields": "scenario_name,trigger_type,channel,target_rfm_segment",
-  "show_title_field_in_link": 1,
-  "field_order": [
-    "scenario_name",
-    "enabled",
-    "trigger_type",
-    "column_break_1",
-    "target_rfm_segment",
-    "inactivity_days",
-    "channel",
-    "template_code",
-    "section_message",
-    "message_template"
-  ],
-  "fields": [
-    {
-      "fieldname": "scenario_name",
-      "fieldtype": "Data",
-      "in_list_view": 1,
-      "label": "عنوان سناریو",
-      "reqd": 1
-    },
-    {
-      "default": "1",
-      "fieldname": "enabled",
-      "fieldtype": "Check",
-      "in_list_view": 1,
-      "in_standard_filter": 1,
-      "label": "فعال"
-    },
-    {
-      "default": "RFM_SEGMENT_CHANGE",
-      "fieldname": "trigger_type",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "in_standard_filter": 1,
-      "label": "نوع تریگر",
-      "options": "RFM_SEGMENT_CHANGE\nINACTIVITY\nFIRST_ORDER\nBIRTHDAY",
-      "reqd": 1
-    },
-    {
-      "fieldname": "column_break_1",
-      "fieldtype": "Column Break"
-    },
-    {
-      "depends_on": "eval:doc.trigger_type=='RFM_SEGMENT_CHANGE'",
-      "fieldname": "target_rfm_segment",
-      "fieldtype": "Select",
-      "label": "سگمنت هدف RFM",
-      "options": "CHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST"
-    },
-    {
-      "depends_on": "eval:doc.trigger_type=='INACTIVITY'",
-      "fieldname": "inactivity_days",
-      "fieldtype": "Int",
-      "label": "روزهای عدم فعالیت"
-    },
-    {
-      "default": "SMS",
-      "fieldname": "channel",
-      "fieldtype": "Select",
-      "in_list_view": 1,
-      "label": "کانال ارتباطی",
-      "options": "SMS\nTELEGRAM\nWHATSAPP\nEMAIL"
-    },
-    {
-      "description": "کد الگوی کاوه‌نگار برای عبور از بلک‌لیست (اختیاری)",
-      "fieldname": "template_code",
-      "fieldtype": "Data",
-      "label": "کد الگوی پیامک (پترن)"
-    },
-    {
-      "fieldname": "section_message",
-      "fieldtype": "Section Break",
-      "label": "قالب پیام"
-    },
-    {
-      "description": "امکان استفاده از متغیرها مانند {{ customer_name }} وجود دارد.",
-      "fieldname": "message_template",
-      "fieldtype": "Small Text",
-      "label": "متن قالب پیام",
-      "reqd": 1
-    }
-  ],
-  "module": "Marketing Automation",
-  "name": "Mkt Scenario",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "read": 1,
-      "role": "System Manager",
-      "write": 1
-    },
-    {
-      "create": 1,
-      "delete": 1,
-      "read": 1,
-      "role": "Marketing Manager",
-      "write": 1
-    },
-    {
-      "read": 1,
-      "role": "Sales Manager"
-    },
-    {
-      "read": 1,
-      "role": "Sales User"
-    }
-  ]
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "format:SCN-{#####}",
+ "creation": "2026-10-17 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "title_field": "scenario_name",
+ "search_fields": "scenario_name,trigger_type,channel",
+ "show_title_field_in_link": 1,
+ "field_order": [
+  "scenario_name",
+  "column_break_head",
+  "enabled",
+  "section_who",
+  "trigger_type",
+  "target_rfm_segment",
+  "inactivity_days",
+  "delay_days",
+  "purchase_count_target",
+  "spend_threshold",
+  "column_break_when",
+  "send_hour",
+  "trigger_help",
+  "last_run_on",
+  "section_message",
+  "channel",
+  "message_template",
+  "column_break_msg",
+  "discount_percent",
+  "code_valid_days",
+  "section_pattern",
+  "template_code"
+ ],
+ "fields": [
+  {
+   "fieldname": "scenario_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "عنوان اتوماسیون",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "روشن",
+   "description": "تا روشن نشود برای هیچ مشتری‌ای ارسال نمی‌شود."
+  },
+  {
+   "fieldname": "section_who",
+   "fieldtype": "Section Break",
+   "label": "۱. چه کسی و چه زمانی؟"
+  },
+  {
+   "default": "INACTIVITY",
+   "fieldname": "trigger_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "چه اتفاقی بیفتد",
+   "options": "INACTIVITY\nRFM_SEGMENT_CHANGE\nFIRST_ORDER\nAFTER_PURCHASE\nPURCHASE_COUNT\nSPEND_THRESHOLD\nBIRTHDAY",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.trigger_type=='RFM_SEGMENT_CHANGE'",
+   "mandatory_depends_on": "eval:doc.trigger_type=='RFM_SEGMENT_CHANGE'",
+   "fieldname": "target_rfm_segment",
+   "fieldtype": "Select",
+   "label": "وقتی مشتری وارد این گروه شد",
+   "options": "CHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST"
+  },
+  {
+   "depends_on": "eval:doc.trigger_type=='INACTIVITY'",
+   "mandatory_depends_on": "eval:doc.trigger_type=='INACTIVITY'",
+   "fieldname": "inactivity_days",
+   "fieldtype": "Int",
+   "label": "روز بدون خرید",
+   "default": "60"
+  },
+  {
+   "depends_on": "eval:['FIRST_ORDER','AFTER_PURCHASE'].includes(doc.trigger_type)",
+   "fieldname": "delay_days",
+   "fieldtype": "Int",
+   "label": "چند روز بعد از خرید",
+   "default": "1",
+   "description": "صفر یعنی همان لحظه‌ی ثبت فاکتور."
+  },
+  {
+   "depends_on": "eval:doc.trigger_type=='PURCHASE_COUNT'",
+   "mandatory_depends_on": "eval:doc.trigger_type=='PURCHASE_COUNT'",
+   "fieldname": "purchase_count_target",
+   "fieldtype": "Int",
+   "label": "خرید چندم",
+   "default": "5"
+  },
+  {
+   "depends_on": "eval:doc.trigger_type=='SPEND_THRESHOLD'",
+   "mandatory_depends_on": "eval:doc.trigger_type=='SPEND_THRESHOLD'",
+   "fieldname": "spend_threshold",
+   "fieldtype": "Currency",
+   "label": "وقتی جمع خریدش به این مبلغ رسید"
+  },
+  {
+   "fieldname": "column_break_when",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:['INACTIVITY','FIRST_ORDER','AFTER_PURCHASE','BIRTHDAY'].includes(doc.trigger_type)",
+   "fieldname": "send_hour",
+   "fieldtype": "Int",
+   "label": "ساعت ارسال",
+   "default": "10",
+   "description": "ساعت روز (۰ تا ۲۳) به وقت تهران. بقیه‌ی رویدادها همان لحظه ارسال می‌شوند."
+  },
+  {
+   "fieldname": "trigger_help",
+   "fieldtype": "HTML",
+   "label": "توضیح"
+  },
+  {
+   "fieldname": "last_run_on",
+   "fieldtype": "Date",
+   "label": "آخرین اجرا",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "section_message",
+   "fieldtype": "Section Break",
+   "label": "۲. چه پیامی؟"
+  },
+  {
+   "default": "SMS",
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "از چه راهی",
+   "options": "SMS\nTELEGRAM"
+  },
+  {
+   "description": "می‌توانید بنویسید: {name} نام مشتری، {code} کد تخفیف، {discount} درصد تخفیف، {expiry} تاریخ انقضای کد.",
+   "fieldname": "message_template",
+   "fieldtype": "Small Text",
+   "label": "متن پیام",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_msg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "کد تخفیف (درصد)",
+   "description": "اگر صفر باشد کد تخفیف ساخته نمی‌شود."
+  },
+  {
+   "depends_on": "eval:doc.discount_percent",
+   "fieldname": "code_valid_days",
+   "fieldtype": "Int",
+   "label": "اعتبار کد (روز)",
+   "default": "7"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_pattern",
+   "fieldtype": "Section Break",
+   "label": "پیامک پترن کاوه‌نگار (اختیاری)"
+  },
+  {
+   "description": "فقط برای کاوه‌نگار. با سیگنال خالی بگذارید.",
+   "fieldname": "template_code",
+   "fieldtype": "Data",
+   "label": "کد الگوی پیامک (پترن)"
+  }
+ ],
+ "module": "Marketing Automation",
+ "name": "Mkt Scenario",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "Marketing Manager",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales Manager"
+  },
+  {
+   "read": 1,
+   "role": "Sales User"
+  }
+ ],
+ "modified": "2026-11-23 18:30:00.000000"
 }
