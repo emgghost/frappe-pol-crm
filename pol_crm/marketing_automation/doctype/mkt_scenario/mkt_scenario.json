@@ -17,8 +17,34 @@
     "inactivity_days",
     "channel",
     "template_code",
+    "section_trigger",
+    "start_date",
+    "delay_days",
+    "delay_hours",
+    "spend_threshold",
+    "purchase_count_target",
+    "first_purchase_only",
+    "occasions",
+    "points_before_days",
+    "column_trigger",
+    "club_tiers",
+    "activity_segments",
+    "repeat_every_days",
+    "max_sends",
+    "call_reminder",
+    "send_message",
+    "section_discount",
+    "discount_percent",
+    "coupon_validity_days",
+    "column_discount",
+    "tier_discounts",
     "section_message",
-    "message_template"
+    "message_template",
+    "section_followup",
+    "followup_enabled",
+    "followup_wait_days",
+    "column_followup",
+    "followup_message"
   ],
   "fields": [
     {
@@ -43,7 +69,7 @@
       "in_list_view": 1,
       "in_standard_filter": 1,
       "label": "نوع تریگر",
-      "options": "RFM_SEGMENT_CHANGE\nINACTIVITY\nFIRST_ORDER\nBIRTHDAY",
+      "options": "RFM_SEGMENT_CHANGE\nINACTIVITY\nFIRST_ORDER\nBIRTHDAY\nFIRST_PURCHASE\nSPEND_THRESHOLD\nPURCHASE_COUNT\nAFTER_PURCHASE\nCHURN\nOCCASION\nBIRTHDAY_BY_TIER\nINCOMPLETE_ORDER\nBACK_IN_STOCK\nPOINTS_USABLE\nPOINTS_EXPIRY\nAT_RISK_CALL",
       "reqd": 1
     },
     {
@@ -58,7 +84,7 @@
       "options": "CHAMPIONS\nCANT_LOSE\nAT_RISK\nLOYAL\nPOTENTIAL_LOYALIST\nNEW_CUSTOMERS\nPROMISING\nNEED_ATTENTION\nABOUT_TO_SLEEP\nHIBERNATING\nLOST"
     },
     {
-      "depends_on": "eval:doc.trigger_type=='INACTIVITY'",
+      "depends_on": "eval:in_list(['INACTIVITY', 'CHURN', 'AT_RISK_CALL'], doc.trigger_type)",
       "fieldname": "inactivity_days",
       "fieldtype": "Int",
       "label": "روزهای عدم فعالیت"
@@ -69,7 +95,7 @@
       "fieldtype": "Select",
       "in_list_view": 1,
       "label": "کانال ارتباطی",
-      "options": "SMS\nTELEGRAM\nWHATSAPP\nEMAIL"
+      "options": "SMS\nTELEGRAM\nWHATSAPP\nINSTAGRAM\nWAFI\nEMAIL"
     },
     {
       "description": "کد الگوی کاوه‌نگار برای عبور از بلک‌لیست (اختیاری)",
@@ -78,16 +104,177 @@
       "label": "کد الگوی پیامک (پترن)"
     },
     {
+      "fieldname": "section_trigger",
+      "fieldtype": "Section Break",
+      "label": "Trigger Details"
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "label": "Start On",
+      "description": "Leave empty to start as soon as it is enabled."
+    },
+    {
+      "fieldname": "delay_days",
+      "fieldtype": "Int",
+      "label": "Delay (Days)",
+      "depends_on": "eval:in_list(['FIRST_PURCHASE', 'FIRST_ORDER', 'SPEND_THRESHOLD', 'PURCHASE_COUNT', 'AFTER_PURCHASE', 'BIRTHDAY', 'BIRTHDAY_BY_TIER', 'OCCASION'], doc.trigger_type)",
+      "description": "Days after the trigger. For birthdays and occasions: days before the day."
+    },
+    {
+      "fieldname": "delay_hours",
+      "fieldtype": "Int",
+      "label": "Remind After (Hours)",
+      "default": "1",
+      "depends_on": "eval:in_list(['INCOMPLETE_ORDER'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "spend_threshold",
+      "fieldtype": "Currency",
+      "label": "Total Spend Reaches (IQD)",
+      "depends_on": "eval:in_list(['SPEND_THRESHOLD'], doc.trigger_type)",
+      "mandatory_depends_on": "eval:in_list(['SPEND_THRESHOLD'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "purchase_count_target",
+      "fieldtype": "Int",
+      "label": "Number of Purchases",
+      "depends_on": "eval:in_list(['PURCHASE_COUNT'], doc.trigger_type)",
+      "mandatory_depends_on": "eval:in_list(['PURCHASE_COUNT'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "first_purchase_only",
+      "fieldtype": "Check",
+      "label": "First Purchase Only",
+      "depends_on": "eval:in_list(['AFTER_PURCHASE'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "occasions",
+      "fieldtype": "Small Text",
+      "label": "Occasions",
+      "depends_on": "eval:in_list(['OCCASION'], doc.trigger_type)",
+      "description": "Comma separated names from Mkt Occasion. Leave empty for every enabled occasion."
+    },
+    {
+      "fieldname": "points_before_days",
+      "fieldtype": "Data",
+      "label": "Days Before Points Expire",
+      "default": "7",
+      "depends_on": "eval:in_list(['POINTS_EXPIRY'], doc.trigger_type)",
+      "description": "Comma separated, e.g. 30, 14, 7"
+    },
+    {
+      "fieldname": "column_trigger",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "club_tiers",
+      "fieldtype": "Small Text",
+      "label": "Club Tiers",
+      "depends_on": "eval:in_list(['CHURN', 'AT_RISK_CALL', 'BIRTHDAY_BY_TIER'], doc.trigger_type)",
+      "description": "Comma separated, e.g. Gold, Platinum. Needs the Club subscription."
+    },
+    {
+      "fieldname": "activity_segments",
+      "fieldtype": "Small Text",
+      "label": "Activity",
+      "depends_on": "eval:in_list(['CHURN'], doc.trigger_type)",
+      "description": "Comma separated: No Activity, Re-engage"
+    },
+    {
+      "fieldname": "repeat_every_days",
+      "fieldtype": "Int",
+      "label": "Repeat Every (Days)",
+      "depends_on": "eval:in_list(['CHURN', 'POINTS_USABLE'], doc.trigger_type)",
+      "description": "0 = send once."
+    },
+    {
+      "fieldname": "max_sends",
+      "fieldtype": "Int",
+      "label": "Stop After (Sends)",
+      "default": "1",
+      "depends_on": "eval:in_list(['CHURN', 'POINTS_USABLE'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "call_reminder",
+      "fieldtype": "Check",
+      "label": "Remind Me to Call",
+      "default": "1",
+      "depends_on": "eval:in_list(['AT_RISK_CALL'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "send_message",
+      "fieldtype": "Check",
+      "label": "Also Send the Customer a Message",
+      "depends_on": "eval:in_list(['AT_RISK_CALL'], doc.trigger_type)"
+    },
+    {
+      "fieldname": "section_discount",
+      "fieldtype": "Section Break",
+      "label": "Discount"
+    },
+    {
+      "fieldname": "discount_percent",
+      "fieldtype": "Percent",
+      "label": "Discount %",
+      "description": "A single-use coupon is created for each customer. Leave empty for a greeting only."
+    },
+    {
+      "fieldname": "coupon_validity_days",
+      "fieldtype": "Int",
+      "label": "Coupon Valid For (Days)",
+      "default": "7"
+    },
+    {
+      "fieldname": "column_discount",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "tier_discounts",
+      "fieldtype": "Small Text",
+      "label": "Discount per Club Tier",
+      "description": "e.g. Bronze:5, Silver:10, Gold:15, Platinum:20"
+    },
+    {
       "fieldname": "section_message",
       "fieldtype": "Section Break",
       "label": "قالب پیام"
     },
     {
-      "description": "امکان استفاده از متغیرها مانند {{ customer_name }} وجود دارد.",
+      "description": "{name}, {code}, {discount}, {points}, {date}, {item}, {days} — {{ customer_name }}",
       "fieldname": "message_template",
       "fieldtype": "Small Text",
       "label": "متن قالب پیام",
-      "reqd": 1
+      "reqd": 0,
+      "mandatory_depends_on": "eval:doc.trigger_type!='AT_RISK_CALL' || doc.send_message"
+    },
+    {
+      "fieldname": "section_followup",
+      "fieldtype": "Section Break",
+      "label": "Follow-up Message"
+    },
+    {
+      "fieldname": "followup_enabled",
+      "fieldtype": "Check",
+      "label": "Send a 2nd Message if the Customer Doesn't Buy"
+    },
+    {
+      "fieldname": "followup_wait_days",
+      "fieldtype": "Int",
+      "label": "Wait (Days)",
+      "default": "2",
+      "depends_on": "followup_enabled"
+    },
+    {
+      "fieldname": "column_followup",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "followup_message",
+      "fieldtype": "Small Text",
+      "label": "Follow-up Message",
+      "depends_on": "followup_enabled",
+      "description": "Stops automatically once the customer purchases."
     }
   ],
   "module": "Marketing Automation",

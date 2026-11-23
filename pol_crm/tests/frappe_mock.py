@@ -106,6 +106,15 @@ def setup_mock_frappe():
     sys.modules["frappe"] = mock_frappe
     sys.modules["frappe.utils"] = mock_utils
 
+    # Controllers subclass frappe.model.document.Document: give them a real class to inherit.
+    mock_model = MagicMock()
+    mock_document = MagicMock()
+    mock_document.Document = type("Document", (), {})
+    mock_model.document = mock_document
+    mock_frappe.model = mock_model
+    sys.modules["frappe.model"] = mock_model
+    sys.modules["frappe.model.document"] = mock_document
+
     if "pol_crm.rfm.rfm_calculator" in sys.modules:
         sys.modules["pol_crm.rfm.rfm_calculator"].frappe = mock_frappe
 

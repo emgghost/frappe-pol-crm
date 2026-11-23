@@ -11,6 +11,7 @@
   "field_order": [
     "customer",
     "scenario",
+    "campaign",
     "channel",
     "recipient",
     "column_break_1",
@@ -18,6 +19,7 @@
     "skip_reason",
     "category",
     "external_id",
+    "cost",
     "section_content",
     "message_body"
   ],
@@ -36,7 +38,16 @@
       "in_list_view": 1,
       "in_standard_filter": 1,
       "label": "سناریو",
-      "options": "Mkt Scenario"
+      "options": "Mkt Scenario",
+      "search_index": 1
+    },
+    {
+      "fieldname": "campaign",
+      "fieldtype": "Link",
+      "label": "Campaign",
+      "options": "Mkt Campaign",
+      "in_standard_filter": 1,
+      "search_index": 1
     },
     {
       "default": "SMS",
@@ -45,7 +56,7 @@
       "in_list_view": 1,
       "in_standard_filter": 1,
       "label": "کانال ارتباطی",
-      "options": "SMS\nTELEGRAM\nWHATSAPP\nEMAIL"
+      "options": "SMS\nTELEGRAM\nWHATSAPP\nINSTAGRAM\nWAFI\nEMAIL"
     },
     {
       "fieldname": "recipient",
@@ -81,6 +92,12 @@
       "fieldname": "external_id",
       "fieldtype": "Data",
       "label": "شناسه ارائه‌دهنده (Message ID)"
+    },
+    {
+      "fieldname": "cost",
+      "fieldtype": "Currency",
+      "label": "Cost (IQD)",
+      "read_only": 1
     },
     {
       "fieldname": "section_content",

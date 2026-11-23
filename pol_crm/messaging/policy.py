@@ -8,9 +8,13 @@ from datetime import datetime, time
 import pytz
 import frappe
 from frappe.utils import now_datetime, nowdate, add_days, getdate, cint
-from pol_crm.messaging.phone_utils import normalize_iranian_mobile
+from pol_crm.messaging.phone_utils import normalize_iranian_mobile, normalize_mobile
 from pol_crm.messaging.kavenegar import send_kavenegar_sms, send_kavenegar_pattern
 from pol_crm.messaging.telegram import send_telegram_message
+from pol_crm.messaging.channels import send_whatsapp_message, send_instagram_dm, send_wafi_message
+
+DEFAULT_TIMEZONE = "Asia/Baghdad"
+INSTAGRAM_WINDOW_HOURS = 24
 
 
 def get_messaging_settings():
@@ -21,7 +25,7 @@ def get_messaging_settings():
             "quiet_hours_enabled": getattr(settings, "quiet_hours_enabled", 1),
             "quiet_start_hour": cint(getattr(settings, "quiet_start_hour", 21)),
             "quiet_end_hour": cint(getattr(settings, "quiet_end_hour", 9)),
-            "timezone": getattr(settings, "timezone", "Asia/Tehran") or "Asia/Tehran",
+            "timezone": getattr(settings, "timezone", DEFAULT_TIMEZONE) or DEFAULT_TIMEZONE,
             "cap_per_day": cint(getattr(settings, "cap_per_day", 1)),
             "cap_per_week": cint(getattr(settings, "cap_per_week", 2)),
             "test_mode": getattr(settings, "test_mode", 0),
@@ -31,7 +35,7 @@ def get_messaging_settings():
         "quiet_hours_enabled": 1,
         "quiet_start_hour": 21,
         "quiet_end_hour": 9,
-        "timezone": "Asia/Tehran",
+        "timezone": DEFAULT_TIMEZONE,
         "cap_per_day": 1,
         "cap_per_week": 2,
         "test_mode": 0,
@@ -44,7 +48,7 @@ def is_in_quiet_hours(settings):
     if not settings.get("quiet_hours_enabled"):
         return False
 
-    tz = pytz.timezone(settings.get("timezone", "Asia/Tehran"))
+    tz = pytz.timezone(settings.get("timezone") or DEFAULT_TIMEZONE)
     local_now = datetime.now(tz)
     current_hour = local_now.hour
 
@@ -126,7 +130,7 @@ def is_customer_opted_out(customer, channel="SMS"):
     return False
 
 
-def log_message(customer, channel, to_address, text, status, reason=None, message_id=None, category="marketing", existing_log_name=None):
+def log_message(customer, channel, to_address, text, status, reason=None, message_id=None, category="marketing", existing_log_name=None, scenario=None, campaign=None, cost=0):
     """Persist message record into Mkt Message Log, or update existing postponed log to preserve audit trail."""
     if frappe.db.exists("DocType", "Mkt Message Log"):
         try:
@@ -138,13 +142,14 @@ def log_message(customer, channel, to_address, text, status, reason=None, messag
                         "status": status,
                         "skip_reason": reason,
                         "external_id": str(message_id) if message_id else None,
+                        **({"cost": cost} if cost else {}),
                     },
                     update_modified=True,
                 )
                 frappe.db.commit()
                 return existing_log_name
 
-            doc = frappe.get_doc({
+            values = {
                 "doctype": "Mkt Message Log",
                 "customer": customer,
                 "channel": channel,
@@ -154,7 +159,15 @@ def log_message(customer, channel, to_address, text, status, reason=None, messag
                 "skip_reason": reason,
                 "external_id": str(message_id) if message_id else None,
                 "category": category,
-            })
+            }
+            # Only set when known, so logs written by older callers keep their shape.
+            if scenario:
+                values["scenario"] = scenario
+            if campaign:
+                values["campaign"] = campaign
+            if cost:
+                values["cost"] = cost
+            doc = frappe.get_doc(values)
             doc.insert(ignore_permissions=True)
             frappe.db.commit()
             return doc.name
@@ -174,28 +187,46 @@ def send_marketing_message(
     category="marketing",
     urgent=False,
     existing_log_name=None,
+    scenario=None,
+    campaign=None,
+    media_url=None,
+    recipient_id=None,
+    ig_last_inbound=None,
+    charge=True,
+    skip_cap=False,
 ):
     """
     Main entry point for all outbound communications.
     Enforces quiet hours, capping, opt-outs, test-mode, and logging.
+
+    scenario / campaign are written on the message log so results can be reported.
+    recipient_id is the Instagram or Wafi user id. charge=False lets a campaign pay
+    for all its WhatsApp messages in one wallet transaction instead of one each.
     """
     settings = get_messaging_settings()
+    extra = {}
+    if scenario:
+        extra["scenario"] = scenario
+    if campaign:
+        extra["campaign"] = campaign
+    if channel in ("INSTAGRAM", "WAFI") and recipient_id and not phone:
+        phone = recipient_id
 
     # 1. Opt-out Check
     if is_customer_opted_out(customer, channel):
-        log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason="OPTED_OUT", category=category, existing_log_name=existing_log_name)
+        log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason="OPTED_OUT", category=category, existing_log_name=existing_log_name, **extra)
         return {"status": "SKIPPED", "reason": "OPTED_OUT"}
 
     # 2. Quiet Hours Check (for non-urgent marketing)
     if category == "marketing" and not urgent and is_in_quiet_hours(settings):
-        log_message(customer, channel, phone or telegram_chat_id, text, "POSTPONED", reason="QUIET_HOURS", category=category, existing_log_name=existing_log_name)
+        log_message(customer, channel, phone or telegram_chat_id, text, "POSTPONED", reason="QUIET_HOURS", category=category, existing_log_name=existing_log_name, **extra)
         return {"status": "POSTPONED", "reason": "QUIET_HOURS"}
 
     # 3. Frequency Capping Check (for marketing)
-    if category == "marketing" and not urgent:
+    if category == "marketing" and not urgent and not skip_cap:
         capped, cap_reason = check_frequency_cap(customer, settings)
         if capped:
-            log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason=cap_reason, category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason=cap_reason, category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "SKIPPED", "reason": cap_reason}
 
     # 4. Target Address & Test Mode Redirection
@@ -210,7 +241,7 @@ def send_marketing_message(
     if channel == "SMS":
         e164, local_phone, is_valid = normalize_iranian_mobile(final_recipient)
         if not is_valid:
-            log_message(customer, channel, final_recipient, text, "SKIPPED", reason="INVALID_PHONE", category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, final_recipient, text, "SKIPPED", reason="INVALID_PHONE", category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "SKIPPED", "reason": "INVALID_PHONE"}
 
         # Pattern-based sending if template provided
@@ -220,27 +251,95 @@ def send_marketing_message(
             res = send_kavenegar_sms(local_phone, text)
 
         if res.get("success"):
-            log_message(customer, channel, local_phone, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, local_phone, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "SENT", "message_id": res.get("message_id")}
         else:
-            log_message(customer, channel, local_phone, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, local_phone, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "FAILED", "error": res.get("error")}
 
     elif channel == "TELEGRAM":
         target_chat = final_chat_id
         if not target_chat:
-            log_message(customer, channel, target_chat, text, "SKIPPED", reason="NO_CHAT_ID", category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "SKIPPED", reason="NO_CHAT_ID", category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "SKIPPED", "reason": "NO_CHAT_ID"}
 
         res = send_telegram_message(target_chat, text)
         if res.get("success"):
-            log_message(customer, channel, target_chat, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "SENT", "message_id": res.get("message_id")}
         else:
-            log_message(customer, channel, target_chat, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, **extra)
             return {"status": "FAILED", "error": res.get("error")}
 
+    elif channel == "WHATSAPP":
+        e164, _local, is_valid = normalize_mobile(final_recipient)
+        if not is_valid:
+            log_message(customer, channel, final_recipient, text, "SKIPPED", reason="INVALID_PHONE", category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SKIPPED", "reason": "INVALID_PHONE"}
+
+        # WhatsApp costs real money per message: it is paid from the Marketing Wallet.
+        from pol_crm.marketing_hub import wallet
+        from pol_crm.marketing_hub.utils import hub_settings
+
+        price = hub_settings().whatsapp_message_price if charge else 0
+        if price and not wallet.can_pay(price):
+            log_message(customer, channel, e164, text, "SKIPPED", reason="INSUFFICIENT_WALLET", category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SKIPPED", "reason": "INSUFFICIENT_WALLET"}
+
+        res = send_whatsapp_message(e164, text, media_url)
+        if res.get("success"):
+            if price:
+                wallet.charge(price, f"WhatsApp message to {customer}", "Customer", customer)
+            log_message(customer, channel, e164, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, cost=price, **extra)
+            return {"status": "SENT", "message_id": res.get("message_id"), "cost": price}
+        log_message(customer, channel, e164, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, **extra)
+        return {"status": "FAILED", "error": res.get("error")}
+
+    elif channel == "INSTAGRAM":
+        target = recipient_id or final_recipient
+        if settings.get("test_mode") and settings.get("test_phone"):
+            target = settings.get("test_phone")
+        if not target:
+            log_message(customer, channel, target, text, "SKIPPED", reason="NO_INSTAGRAM_ID", category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SKIPPED", "reason": "NO_INSTAGRAM_ID"}
+        if not is_instagram_window_open(customer, ig_last_inbound):
+            log_message(customer, channel, target, text, "SKIPPED", reason="IG_WINDOW_CLOSED", category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SKIPPED", "reason": "IG_WINDOW_CLOSED"}
+
+        res = send_instagram_dm(target, text, media_url)
+        if res.get("success"):
+            log_message(customer, channel, target, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SENT", "message_id": res.get("message_id")}
+        log_message(customer, channel, target, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, **extra)
+        return {"status": "FAILED", "error": res.get("error")}
+
+    elif channel == "WAFI":
+        target = recipient_id or final_recipient
+        if settings.get("test_mode") and settings.get("test_phone"):
+            target = settings.get("test_phone")
+        if not target:
+            log_message(customer, channel, target, text, "SKIPPED", reason="NO_WAFI_USER", category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SKIPPED", "reason": "NO_WAFI_USER"}
+
+        res = send_wafi_message(target, text, media_url)
+        if res.get("success"):
+            log_message(customer, channel, target, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, **extra)
+            return {"status": "SENT", "message_id": res.get("message_id")}
+        log_message(customer, channel, target, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, **extra)
+        return {"status": "FAILED", "error": res.get("error")}
+
     return {"status": "SKIPPED", "reason": "UNSUPPORTED_CHANNEL"}
+
+
+def is_instagram_window_open(customer, last_inbound=None):
+    """Meta only delivers an Instagram DM to someone who messaged the business in the last 24 hours."""
+    if last_inbound is None:
+        last_inbound = frappe.db.get_value("Customer", customer, "custom_instagram_last_inbound")
+    if not last_inbound:
+        return False
+    if isinstance(last_inbound, str):
+        last_inbound = datetime.strptime(last_inbound[:19], "%Y-%m-%d %H:%M:%S")
+    return (now_datetime() - last_inbound).total_seconds() <= INSTAGRAM_WINDOW_HOURS * 3600
 
 
 def enqueue_marketing_message(
@@ -299,12 +398,24 @@ def process_postponed_messages():
     postponed = frappe.get_all(
         "Mkt Message Log",
         filters={"status": "POSTPONED"},
-        fields=["name", "customer", "recipient", "channel", "message_body", "category"],
+        fields=["name", "customer", "recipient", "channel", "message_body", "category", "scenario", "campaign"],
         limit=50,
     )
 
     for item in postponed:
-        if item.channel == "TELEGRAM":
+        if item.channel in ("WHATSAPP", "INSTAGRAM", "WAFI"):
+            send_marketing_message(
+                customer=item.customer,
+                phone=item.recipient,
+                recipient_id=item.recipient,
+                text=item.message_body,
+                channel=item.channel,
+                category=item.category,
+                existing_log_name=item.name,
+                scenario=item.get("scenario"),
+                campaign=item.get("campaign"),
+            )
+        elif item.channel == "TELEGRAM":
             send_marketing_message(
                 customer=item.customer,
                 telegram_chat_id=item.recipient,

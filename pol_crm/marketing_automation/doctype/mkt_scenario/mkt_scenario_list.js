@@ -8,6 +8,11 @@ frappe.listview_settings["Mkt Scenario"] = {
 		}
 	},
 	onload: function (listview) {
+		// Ready-made automations: creates a switched-off automation to review and turn on.
+		listview.page.add_inner_button(__("From Template"), function () {
+			pol_crm.marketing.pick_template("automation");
+		});
+
 		listview.page.add_action_item(__("فعال‌سازی"), function () {
 			listview.call_for_selected_items("frappe.client.set_value", {
 				fieldname: "enabled",

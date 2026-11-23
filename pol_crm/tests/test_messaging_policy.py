@@ -64,7 +64,7 @@ class TestMessagingSettings(unittest.TestCase):
         self.assertEqual(settings["quiet_hours_enabled"], 1)
         self.assertEqual(settings["quiet_start_hour"], 21)
         self.assertEqual(settings["quiet_end_hour"], 9)
-        self.assertEqual(settings["timezone"], "Asia/Tehran")
+        self.assertEqual(settings["timezone"], "Asia/Baghdad")
         self.assertEqual(settings["cap_per_day"], 1)
         self.assertEqual(settings["cap_per_week"], 2)
         self.assertEqual(settings["test_mode"], 0)
@@ -435,7 +435,8 @@ class TestSendMarketingMessage(unittest.TestCase):
     @patch("pol_crm.messaging.policy.is_in_quiet_hours", return_value=False)
     @patch("pol_crm.messaging.policy.check_frequency_cap", return_value=(False, None))
     def test_send_unsupported_channel(self, mock_cap, mock_qh, mock_opt):
-        res = send_marketing_message(customer="CUST-1", channel="WHATSAPP", text="Test")
+        # WhatsApp is a real channel on this branch; email is still not handled here.
+        res = send_marketing_message(customer="CUST-1", channel="EMAIL", text="Test")
         self.assertEqual(res, {"status": "SKIPPED", "reason": "UNSUPPORTED_CHANNEL"})
 
 

@@ -5,7 +5,7 @@
    "label": "توزیع سگمنت‌های مشتریان (RFM)"
   }
  ],
- "content": "[{\"id\":\"pol_h1\",\"type\":\"header\",\"data\":{\"text\":\"باشگاه مشتریان و اتوماسیون بازاریابی پل (POL CRM)\",\"level\":3,\"col\":12}},{\"id\":\"pol_c1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"مشتریان وفادار و قهرمان\",\"col\":3}},{\"id\":\"pol_c2\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"مشتریان در خطر ریزش\",\"col\":3}},{\"id\":\"pol_c3\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"آفرهای فعال وفاداری\",\"col\":3}},{\"id\":\"pol_c4\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"پیام‌های ارسال‌شده\",\"col\":3}},{\"id\":\"pol_ch1\",\"type\":\"chart\",\"data\":{\"chart_name\":\"توزیع سگمنت‌های مشتریان (RFM)\",\"col\":12}},{\"id\":\"pol_h2\",\"type\":\"header\",\"data\":{\"text\":\"دسترسی سریع\",\"level\":4,\"col\":12}},{\"id\":\"pol_sc1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"آفرهای فعال\",\"col\":3}},{\"id\":\"pol_sc2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"سناریوهای بازاریابی\",\"col\":3}},{\"id\":\"pol_sc3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"پیام‌های ارسالی\",\"col\":3}},{\"id\":\"pol_sc4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"تنظیمات RFM\",\"col\":3}},{\"id\":\"pol_h3\",\"type\":\"header\",\"data\":{\"text\":\"بخش‌ها و اسناد\",\"level\":4,\"col\":12}},{\"id\":\"pol_card1\",\"type\":\"card\",\"data\":{\"card_name\":\"باشگاه مشتریان و وفاداری\",\"col\":4}},{\"id\":\"pol_card2\",\"type\":\"card\",\"data\":{\"card_name\":\"اتوماسیون بازاریابی و پیام‌رسانی\",\"col\":4}},{\"id\":\"pol_card3\",\"type\":\"card\",\"data\":{\"card_name\":\"یکپارچگی با CRM\",\"col\":4}},{\"id\":\"pol_card4\",\"type\":\"card\",\"data\":{\"card_name\":\"گزارش‌ها و تحلیل‌ها\",\"col\":6}},{\"id\":\"pol_card5\",\"type\":\"card\",\"data\":{\"card_name\":\"پیکربندی و تنظیمات پایه\",\"col\":6}}]",
+ "content": "[{\"id\": \"pol_h1\", \"type\": \"header\", \"data\": {\"text\": \"باشگاه مشتریان\", \"level\": 3, \"col\": 12}}, {\"id\": \"pol_c1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان وفادار و قهرمان\", \"col\": 3}}, {\"id\": \"pol_c2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان در خطر ریزش\", \"col\": 3}}, {\"id\": \"pol_c3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"آفرهای فعال وفاداری\", \"col\": 3}}, {\"id\": \"pol_c4\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"پیام‌های ارسال‌شده\", \"col\": 3}}, {\"id\": \"pol_ch1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"توزیع سگمنت‌های مشتریان (RFM)\", \"col\": 12}}, {\"id\": \"pol_h2\", \"type\": \"header\", \"data\": {\"text\": \"مشتریان به تفکیک وضعیت\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_s0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"قهرمانان\", \"col\": 4}}, {\"id\": \"pol_s1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"وفادار\", \"col\": 4}}, {\"id\": \"pol_s2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"تازه‌وارد\", \"col\": 4}}, {\"id\": \"pol_s3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"نیازمند توجه\", \"col\": 4}}, {\"id\": \"pol_s4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"در خطر ریزش\", \"col\": 4}}, {\"id\": \"pol_s5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"خوابیده و ازدست‌رفته\", \"col\": 4}}, {\"id\": \"pol_h3\", \"type\": \"header\", \"data\": {\"text\": \"کارهای روزانه\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_d0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"آفرهای فعال\", \"col\": 3}}, {\"id\": \"pol_d1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"سناریوهای روشن\", \"col\": 3}}, {\"id\": \"pol_d2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های به‌تعویق‌افتاده\", \"col\": 3}}, {\"id\": \"pol_d3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های ناموفق\", \"col\": 3}}, {\"id\": \"pol_d4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"باز کردن CRM (معامله‌ها و مخاطبین)\", \"col\": 12}}, {\"id\": \"pol_h4\", \"type\": \"header\", \"data\": {\"text\": \"همه‌ی بخش‌ها\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_card1\", \"type\": \"card\", \"data\": {\"card_name\": \"وفاداری و پیشنهادها\", \"col\": 4}}, {\"id\": \"pol_card2\", \"type\": \"card\", \"data\": {\"card_name\": \"پیام‌رسانی و اتوماسیون\", \"col\": 4}}, {\"id\": \"pol_card3\", \"type\": \"card\", \"data\": {\"card_name\": \"گزارش‌ها و تنظیمات\", \"col\": 4}}, {\"id\": \"pol_mh\", \"type\": \"card\", \"data\": {\"card_name\": \"Marketing Hub\", \"col\": 4}}]",
  "creation": "2026-10-17 12:00:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
@@ -22,25 +22,25 @@
    "hidden": 0,
    "icon": "award",
    "is_query_report": 0,
-   "label": "باشگاه مشتریان و وفاداری",
-   "link_count": 4,
+   "label": "وفاداری و پیشنهادها",
+   "link_count": 3,
    "onboard": 0,
    "type": "Card Break"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "آفرهای وفاداری و کدهای تخفیف",
+   "label": "آفرهای وفاداری و کد تخفیف",
    "link_count": 0,
    "link_to": "Loyalty Offer",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "برنامه وفاداری (Loyalty Program)",
+   "label": "برنامه وفاداری",
    "link_count": 0,
    "link_to": "Loyalty Program",
    "link_type": "DocType",
@@ -50,7 +50,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "لیست کامل مشتریان",
+   "label": "همه‌ی مشتریان",
    "link_count": 0,
    "link_to": "Customer",
    "link_type": "DocType",
@@ -59,27 +59,17 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
-   "label": "تنظیمات الگوریتم RFM",
-   "link_count": 0,
-   "link_to": "RFM Settings",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
    "icon": "send",
    "is_query_report": 0,
-   "label": "اتوماسیون بازاریابی و پیام‌رسانی",
-   "link_count": 4,
+   "label": "پیام‌رسانی و اتوماسیون",
+   "link_count": 3,
    "onboard": 0,
    "type": "Card Break"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "سناریوهای خودکار بازاریابی",
+   "label": "سناریوهای خودکار",
    "link_count": 0,
    "link_to": "Mkt Scenario",
    "link_type": "DocType",
@@ -89,7 +79,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "تاریخچه و لاگ پیام‌ها",
+   "label": "تاریخچه‌ی پیام‌ها",
    "link_count": 0,
    "link_to": "Mkt Message Log",
    "link_type": "DocType",
@@ -99,7 +89,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "کمپین‌های بازاریابی",
+   "label": "کمپین‌ها",
    "link_count": 0,
    "link_to": "Campaign",
    "link_type": "DocType",
@@ -108,76 +98,17 @@
   },
   {
    "hidden": 0,
+   "icon": "settings",
    "is_query_report": 0,
-   "label": "تنظیمات درگاه‌ها و پیام‌رسانی",
-   "link_count": 0,
-   "link_to": "Messaging Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "icon": "users",
-   "is_query_report": 0,
-   "label": "یکپارچگی با CRM",
-   "link_count": 4,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "مخاطبین CRM (Contacts)",
-   "link_count": 0,
-   "link_to": "Contact",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "معامله‌های CRM (Deals)",
-   "link_count": 0,
-   "link_to": "CRM Deal",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "سازمان‌های CRM (Organizations)",
-   "link_count": 0,
-   "link_to": "CRM Organization",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "سرنخ‌های فروش (Leads)",
-   "link_count": 0,
-   "link_to": "Lead",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "icon": "bar-chart-2",
-   "is_query_report": 0,
-   "label": "گزارش‌ها و تحلیل‌ها",
-   "link_count": 3,
+   "label": "گزارش‌ها و تنظیمات",
+   "link_count": 5,
    "onboard": 0,
    "type": "Card Break"
   },
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "جذب مشتری و تحلیل وفاداری",
+   "label": "تحلیل جذب و وفاداری مشتری",
    "link_count": 0,
    "link_to": "Customer Acquisition and Loyalty",
    "link_type": "Report",
@@ -187,7 +118,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "مشتریان بدون تراکنش فروش",
+   "label": "مشتریان بدون خرید",
    "link_count": 0,
    "link_to": "Customers Without Any Sales Transactions",
    "link_type": "Report",
@@ -196,29 +127,20 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 1,
-   "label": "آدرس‌ها و مخاطبین مشتریان",
+   "is_query_report": 0,
+   "label": "تنظیمات RFM",
    "link_count": 0,
-   "link_to": "Address And Contacts",
-   "link_type": "Report",
-   "onboard": 0,
+   "link_to": "RFM Settings",
+   "link_type": "DocType",
+   "onboard": 1,
    "type": "Link"
   },
   {
    "hidden": 0,
-   "icon": "settings",
    "is_query_report": 0,
-   "label": "پیکربندی و تنظیمات پایه",
-   "link_count": 3,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "تنظیمات کلی CRM",
+   "label": "تنظیمات پیامک و تلگرام",
    "link_count": 0,
-   "link_to": "CRM Settings",
+   "link_to": "Messaging Settings",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -226,7 +148,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "گروه‌های مشتریان",
+   "label": "گروه‌های مشتری",
    "link_count": 0,
    "link_to": "Customer Group",
    "link_type": "DocType",
@@ -235,10 +157,149 @@
   },
   {
    "hidden": 0,
+   "icon": "megaphone",
    "is_query_report": 0,
-   "label": "مناطق فروش (Territory)",
+   "label": "Marketing Hub",
+   "link_count": 14,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Templates",
    "link_count": 0,
-   "link_to": "Territory",
+   "link_to": "marketing-templates",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Campaigns",
+   "link_count": 0,
+   "link_to": "Mkt Campaign",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Meta Ads",
+   "link_count": 0,
+   "link_to": "Meta Ad Campaign",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Meta Ad Sets",
+   "link_count": 0,
+   "link_to": "Meta Ad Set",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Meta Ad Creatives",
+   "link_count": 0,
+   "link_to": "Meta Ad",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wafi Ads",
+   "link_count": 0,
+   "link_to": "Wafi Ad",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wafi Offers",
+   "link_count": 0,
+   "link_to": "Wafi Offer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wafi Promote",
+   "link_count": 0,
+   "link_to": "Wafi Promote Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Wafi Notifications",
+   "link_count": 0,
+   "link_to": "Wafi Notification",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Marketing Wallet",
+   "link_count": 0,
+   "link_to": "Mkt Wallet Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Marketing Performance",
+   "link_count": 0,
+   "link_to": "Marketing Performance",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Occasions",
+   "link_count": 0,
+   "link_to": "Mkt Occasion",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Stock Waitlist",
+   "link_count": 0,
+   "link_to": "Mkt Stock Waitlist",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Marketing Hub Settings",
+   "link_count": 0,
+   "link_to": "Marketing Hub Settings",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -275,35 +336,90 @@
  "sequence_id": 1.0,
  "shortcuts": [
   {
-   "color": "Blue",
+   "color": "Green",
    "doc_view": "List",
-   "label": "آفرهای فعال",
-   "link_to": "Loyalty Offer",
-   "stats_filter": "[[\"Loyalty Offer\",\"status\",\"=\",\"ACTIVE\"]]",
-   "type": "DocType"
+   "label": "قهرمانان",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"CHAMPIONS\"]]]"
   },
   {
-   "color": "Purple",
+   "color": "Blue",
    "doc_view": "List",
-   "label": "سناریوهای بازاریابی",
-   "link_to": "Mkt Scenario",
-   "stats_filter": "[[\"Mkt Scenario\",\"enabled\",\"=\",\"1\"]]",
-   "type": "DocType"
+   "label": "وفادار",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"LOYAL\"]]]"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "تازه‌وارد",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"NEW_CUSTOMERS\", \"POTENTIAL_LOYALIST\"]]]"
   },
   {
    "color": "Orange",
    "doc_view": "List",
-   "label": "پیام‌های ارسالی",
+   "label": "نیازمند توجه",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"NEED_ATTENTION\", \"ABOUT_TO_SLEEP\", \"PROMISING\"]]]"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "در خطر ریزش",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"AT_RISK\", \"CANT_LOSE\"]]]"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "خوابیده و ازدست‌رفته",
+   "link_to": "Customer",
+   "type": "DocType",
+   "stats_filter": "[[\"Customer\", \"custom_rfm_segment\", \"in\", [\"HIBERNATING\", \"LOST\"]]]"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "آفرهای فعال",
+   "link_to": "Loyalty Offer",
+   "type": "DocType",
+   "stats_filter": "[[\"Loyalty Offer\", \"status\", \"=\", \"ACTIVE\"]]"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "label": "سناریوهای روشن",
+   "link_to": "Mkt Scenario",
+   "type": "DocType",
+   "stats_filter": "[[\"Mkt Scenario\", \"enabled\", \"=\", 1]]"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "پیام‌های به‌تعویق‌افتاده",
    "link_to": "Mkt Message Log",
-   "stats_filter": "[[\"Mkt Message Log\",\"status\",\"=\",\"SENT\"]]",
-   "type": "DocType"
+   "type": "DocType",
+   "stats_filter": "[[\"Mkt Message Log\", \"status\", \"=\", \"POSTPONED\"]]"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "پیام‌های ناموفق",
+   "link_to": "Mkt Message Log",
+   "type": "DocType",
+   "stats_filter": "[[\"Mkt Message Log\", \"status\", \"=\", \"FAILED\"]]"
   },
   {
    "color": "Green",
-   "doc_view": "List",
-   "label": "تنظیمات RFM",
-   "link_to": "RFM Settings",
-   "type": "DocType"
+   "label": "باز کردن CRM (معامله‌ها و مخاطبین)",
+   "type": "URL",
+   "url": "/crm"
   }
  ],
  "standard": 1,
