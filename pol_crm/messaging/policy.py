@@ -13,6 +13,31 @@ from pol_crm.messaging.kavenegar import send_kavenegar_sms, send_kavenegar_patte
 from pol_crm.messaging.telegram import send_telegram_message
 
 
+def send_plain_sms(mobile, text):
+    """Plain SMS through the provider set in Iran Settings (Signalads by default).
+
+    Sites without iran_base keep using the Kavenegar key in Messaging Settings.
+    """
+    if "iran_base" not in frappe.get_installed_apps():
+        return send_kavenegar_sms(mobile, text)
+
+    from iran_base.utils.sms import SMSError, send_sms
+
+    try:
+        response = send_sms(mobile, text) or {}
+    except SMSError as e:
+        return {"success": False, "error": str(e)}
+    except Exception as e:
+        frappe.log_error(title="POL CRM SMS", message=frappe.get_traceback())
+        return {"success": False, "error": str(e)}
+
+    data = response.get("data") if isinstance(response, dict) else None
+    message_id = None
+    if isinstance(data, dict):
+        message_id = data.get("message_id") or data.get("id")
+    return {"success": True, "message_id": message_id}
+
+
 def get_messaging_settings():
     """Load messaging policy settings or sensible defaults."""
     if frappe.db.exists("DocType", "Messaging Settings"):
@@ -126,7 +151,7 @@ def is_customer_opted_out(customer, channel="SMS"):
     return False
 
 
-def log_message(customer, channel, to_address, text, status, reason=None, message_id=None, category="marketing", existing_log_name=None):
+def log_message(customer, channel, to_address, text, status, reason=None, message_id=None, category="marketing", existing_log_name=None, scenario=None, campaign=None):
     """Persist message record into Mkt Message Log, or update existing postponed log to preserve audit trail."""
     if frappe.db.exists("DocType", "Mkt Message Log"):
         try:
@@ -154,6 +179,8 @@ def log_message(customer, channel, to_address, text, status, reason=None, messag
                 "skip_reason": reason,
                 "external_id": str(message_id) if message_id else None,
                 "category": category,
+                "scenario": scenario,
+                "campaign": campaign,
             })
             doc.insert(ignore_permissions=True)
             frappe.db.commit()
@@ -174,6 +201,8 @@ def send_marketing_message(
     category="marketing",
     urgent=False,
     existing_log_name=None,
+    scenario=None,
+    campaign=None,
 ):
     """
     Main entry point for all outbound communications.
@@ -183,19 +212,19 @@ def send_marketing_message(
 
     # 1. Opt-out Check
     if is_customer_opted_out(customer, channel):
-        log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason="OPTED_OUT", category=category, existing_log_name=existing_log_name)
+        log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason="OPTED_OUT", category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
         return {"status": "SKIPPED", "reason": "OPTED_OUT"}
 
     # 2. Quiet Hours Check (for non-urgent marketing)
     if category == "marketing" and not urgent and is_in_quiet_hours(settings):
-        log_message(customer, channel, phone or telegram_chat_id, text, "POSTPONED", reason="QUIET_HOURS", category=category, existing_log_name=existing_log_name)
+        log_message(customer, channel, phone or telegram_chat_id, text, "POSTPONED", reason="QUIET_HOURS", category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
         return {"status": "POSTPONED", "reason": "QUIET_HOURS"}
 
     # 3. Frequency Capping Check (for marketing)
     if category == "marketing" and not urgent:
         capped, cap_reason = check_frequency_cap(customer, settings)
         if capped:
-            log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason=cap_reason, category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, phone or telegram_chat_id, text, "SKIPPED", reason=cap_reason, category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "SKIPPED", "reason": cap_reason}
 
     # 4. Target Address & Test Mode Redirection
@@ -210,34 +239,34 @@ def send_marketing_message(
     if channel == "SMS":
         e164, local_phone, is_valid = normalize_iranian_mobile(final_recipient)
         if not is_valid:
-            log_message(customer, channel, final_recipient, text, "SKIPPED", reason="INVALID_PHONE", category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, final_recipient, text, "SKIPPED", reason="INVALID_PHONE", category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "SKIPPED", "reason": "INVALID_PHONE"}
 
         # Pattern-based sending if template provided
         if template_code and template_tokens:
             res = send_kavenegar_pattern(local_phone, template_code, template_tokens)
         else:
-            res = send_kavenegar_sms(local_phone, text)
+            res = send_plain_sms(local_phone, text)
 
         if res.get("success"):
-            log_message(customer, channel, local_phone, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, local_phone, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "SENT", "message_id": res.get("message_id")}
         else:
-            log_message(customer, channel, local_phone, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, local_phone, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "FAILED", "error": res.get("error")}
 
     elif channel == "TELEGRAM":
         target_chat = final_chat_id
         if not target_chat:
-            log_message(customer, channel, target_chat, text, "SKIPPED", reason="NO_CHAT_ID", category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "SKIPPED", reason="NO_CHAT_ID", category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "SKIPPED", "reason": "NO_CHAT_ID"}
 
         res = send_telegram_message(target_chat, text)
         if res.get("success"):
-            log_message(customer, channel, target_chat, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "SENT", message_id=res.get("message_id"), category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "SENT", "message_id": res.get("message_id")}
         else:
-            log_message(customer, channel, target_chat, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name)
+            log_message(customer, channel, target_chat, text, "FAILED", reason=res.get("error"), category=category, existing_log_name=existing_log_name, scenario=scenario, campaign=campaign)
             return {"status": "FAILED", "error": res.get("error")}
 
     return {"status": "SKIPPED", "reason": "UNSUPPORTED_CHANNEL"}

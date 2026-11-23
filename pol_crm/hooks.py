@@ -21,7 +21,7 @@ add_to_apps_screen = [
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/pol_crm/css/pol_crm.css"
-# app_include_js = "/assets/pol_crm/js/pol_crm.js"
+app_include_js = "/assets/pol_crm/js/pol_marketing.js"
 
 # Document Events
 # ---------------
@@ -29,7 +29,10 @@ add_to_apps_screen = [
 
 doc_events = {
     "Sales Invoice": {
-        "on_submit": "pol_crm.rfm.rfm_calculator.on_sales_invoice_submit",
+        "on_submit": [
+            "pol_crm.rfm.rfm_calculator.on_sales_invoice_submit",
+            "pol_crm.marketing_automation.runner.on_sales_invoice_submit",
+        ],
         "on_cancel": "pol_crm.rfm.rfm_calculator.on_sales_invoice_cancel",
     },
     "Sales Order": {
@@ -62,11 +65,17 @@ scheduler_events = {
     "daily": [
         "pol_crm.rfm.rfm_calculator.nightly_recalculate_all_customers_rfm",
         "pol_crm.rfm.offer_engine.daily_offer_decision_pass",
-        "pol_crm.marketing_automation.runner.daily_automation_scan",
     ],
     "hourly": [
         "pol_crm.messaging.policy.process_postponed_messages",
+        # Each automation runs once a day at its own hour, so this checks every hour.
+        "pol_crm.marketing_automation.runner.run_daily_automations",
     ],
+    "cron": {
+        "*/5 * * * *": [
+            "pol_crm.marketing_automation.doctype.mkt_campaign.mkt_campaign.process_due_campaigns",
+        ],
+    },
 }
 
 # Fixtures
@@ -96,6 +105,7 @@ fixtures = [
                     "Customer-custom_mkt_sms_opted_out",
                     "Customer-custom_mkt_preferred_channel",
                     "Customer-custom_telegram_chat_id",
+                    "Customer-custom_birth_date",
                     "Contact-custom_rfm_segment",
                     "Contact-custom_telegram_chat_id",
                     "CRM Deal-custom_rfm_segment",
@@ -106,5 +116,6 @@ fixtures = [
 ]
 
 after_migrate = [
+    "pol_crm.setup_fields.ensure_custom_fields",
     "pol_crm.rfm.crm_views.setup_standard_crm_views",
 ]

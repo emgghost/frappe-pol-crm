@@ -79,7 +79,7 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "سناریوهای خودکار بازاریابی",
+   "label": "اتوماسیون‌ها (ارسال خودکار)",
    "link_count": 0,
    "link_to": "Mkt Scenario",
    "link_type": "DocType",
@@ -99,9 +99,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "کمپین‌های بازاریابی",
+   "label": "کمپین‌ها (ارسال یک‌باره)",
    "link_count": 0,
-   "link_to": "Campaign",
+   "link_to": "Mkt Campaign",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -244,7 +244,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-11-23 18:00:00.000000",
+ "modified": "2026-11-23 18:40:00.000000",
  "modified_by": "Administrator",
  "module": "RFM",
  "name": "POL CRM",

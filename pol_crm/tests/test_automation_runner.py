@@ -1,5 +1,7 @@
 """
 Unit & Integration Tests for Story 5 (Issue #6):
+Who gets an automation and when is tested against a real site in
+marketing_automation/doctype/mkt_campaign/test_mkt_campaign.py.
 Marketing Automation Scenarios & Jinja2 Template Runner Tests.
 """
 
@@ -15,7 +17,6 @@ from pol_crm.marketing_automation.runner import (
     render_template_string,
     trigger_segment_change_automations,
     run_inactivity_scan,
-    daily_automation_scan,
 )
 
 
@@ -87,75 +88,6 @@ class TestSegmentChangeAutomations(unittest.TestCase):
         trigger_segment_change_automations("CUST-1", "NEW_CUSTOMERS", "POTENTIAL_LOYALIST")
         frappe.get_doc.assert_not_called()
 
-    @patch("pol_crm.marketing_automation.runner.send_marketing_message")
-    def test_trigger_segment_change_scenario_success(self, mock_send_mkt):
-        frappe.db.exists.side_effect = None
-        frappe.db.exists.return_value = True
-
-        mock_scenario = MagicMock(
-            scenario_name="تبریک پیوستن به مشتریان برتر",
-            channel="SMS",
-            message_template="سلام {{ customer_name }} عزیز، شما اکنون یک {{ new_segment }} هستید!",
-            template_code="CHAMP_WELCOME",
-        )
-        mock_scenario.name = "SCN-001"
-        frappe.get_all.return_value = [mock_scenario]
-
-        mock_customer = MagicMock(
-            customer_name="امید نوری",
-            mobile_no="09123334455",
-            phone=None,
-        )
-        mock_customer.name = "CUST-CHAMP"
-        frappe.get_doc.return_value = mock_customer
-
-        trigger_segment_change_automations("CUST-CHAMP", "POTENTIAL_LOYALIST", "CHAMPIONS")
-
-        frappe.get_all.assert_called_once_with(
-            "Mkt Scenario",
-            filters={
-                "enabled": 1,
-                "trigger_type": "RFM_SEGMENT_CHANGE",
-                "target_rfm_segment": "CHAMPIONS",
-            },
-            fields=["name", "scenario_name", "channel", "message_template", "template_code"],
-        )
-        frappe.get_doc.assert_called_once_with("Customer", "CUST-CHAMP")
-        mock_send_mkt.assert_called_once_with(
-            customer="CUST-CHAMP",
-            phone="09123334455",
-            text="سلام امید نوری عزیز، شما اکنون یک CHAMPIONS هستید!",
-            channel="SMS",
-            template_code="CHAMP_WELCOME",
-            category="marketing",
-        )
-
-    @patch("pol_crm.marketing_automation.runner.send_marketing_message")
-    def test_customer_phone_fallback_when_mobile_is_empty(self, mock_send_mkt):
-        frappe.db.exists.side_effect = None
-        frappe.db.exists.return_value = True
-
-        mock_scenario = MagicMock(
-            channel="SMS",
-            message_template="سلام {{ customer_name }}",
-            template_code=None,
-        )
-        frappe.get_all.return_value = [mock_scenario]
-
-        # mobile_no is None, phone has mobile number
-        mock_customer = MagicMock(customer_name="محسن", mobile_no=None, phone="09127778899")
-        frappe.get_doc.return_value = mock_customer
-
-        trigger_segment_change_automations("CUST-PHONE", "LOST", "NEW_CUSTOMERS")
-        mock_send_mkt.assert_called_once_with(
-            customer="CUST-PHONE",
-            phone="09127778899",
-            text="سلام محسن",
-            channel="SMS",
-            template_code=None,
-            category="marketing",
-        )
-
 
 class TestInactivityScan(unittest.TestCase):
     """Tests for scheduled customer inactivity scan and messaging."""
@@ -169,75 +101,6 @@ class TestInactivityScan(unittest.TestCase):
 
         run_inactivity_scan()
         frappe.get_all.assert_not_called()
-
-    @patch("pol_crm.marketing_automation.runner.send_marketing_message")
-    def test_inactivity_scan_matches_and_dispatches(self, mock_send_mkt):
-        frappe.db.exists.side_effect = None
-        frappe.db.exists.return_value = True
-
-        mock_scenario = MagicMock(
-            inactivity_days=45,
-            channel="SMS",
-            message_template="سلام {{ customer_name }} عزیز، {{ days }} روزه از آخرین خریدتون میگذره!",
-        )
-        mock_scenario.name = "SCN-INACTIVE-45"
-
-        mock_candidate1 = MagicMock(customer_name="مریم", mobile_no="09121112222", phone=None)
-        mock_candidate1.name = "CUST-M1"
-
-        mock_candidate2 = MagicMock(customer_name="داود", mobile_no="09123334444", phone=None)
-        mock_candidate2.name = "CUST-D2"
-
-        # First get_all call for Mkt Scenario, second for Customers matching 45 days
-        frappe.get_all.side_effect = [
-            [mock_scenario],
-            [mock_candidate1, mock_candidate2],
-        ]
-
-        run_inactivity_scan()
-
-        self.assertEqual(mock_send_mkt.call_count, 2)
-        mock_send_mkt.assert_any_call(
-            customer="CUST-M1",
-            phone="09121112222",
-            text="سلام مریم عزیز، 45 روزه از آخرین خریدتون میگذره!",
-            channel="SMS",
-            category="marketing",
-        )
-        mock_send_mkt.assert_any_call(
-            customer="CUST-D2",
-            phone="09123334444",
-            text="سلام داود عزیز، 45 روزه از آخرین خریدتون میگذره!",
-            channel="SMS",
-            category="marketing",
-        )
-
-    @patch("pol_crm.marketing_automation.runner.send_marketing_message")
-    def test_inactivity_scan_no_matching_customers(self, mock_send_mkt):
-        frappe.db.exists.side_effect = None
-        frappe.db.exists.return_value = True
-
-        mock_scenario = MagicMock(inactivity_days=60, channel="SMS", message_template="Hello")
-        frappe.get_all.side_effect = [
-            [mock_scenario],
-            [],  # No customers matching 60 days
-        ]
-
-        run_inactivity_scan()
-        mock_send_mkt.assert_not_called()
-
-
-class TestDailyAutomationScan(unittest.TestCase):
-    """Tests for nightly scheduled automation scan task."""
-
-    def setUp(self):
-        reset_mock_frappe()
-
-    @patch("pol_crm.marketing_automation.runner.run_inactivity_scan")
-    def test_daily_automation_scan(self, mock_run):
-        daily_automation_scan()
-        mock_run.assert_called_once()
-        frappe.logger().info.assert_called()
 
 
 if __name__ == "__main__":
