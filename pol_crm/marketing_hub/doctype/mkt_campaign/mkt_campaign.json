@@ -2,18 +2,19 @@
  "actions": [],
  "autoname": "format:CMP-{#####}",
  "creation": "2026-11-23 18:30:00.000000",
- "modified": "2026-11-23 18:30:00.000000",
+ "modified": "2026-11-24 10:00:00.000000",
  "modified_by": "Administrator",
  "owner": "Administrator",
  "doctype": "DocType",
  "engine": "InnoDB",
- "module": "Marketing Automation",
+ "module": "Marketing Hub",
  "name": "Mkt Campaign",
  "title_field": "campaign_name",
  "show_title_field_in_link": 1,
  "search_fields": "campaign_name,status",
  "field_order": [
   "campaign_name",
+  "campaign_type",
   "column_break_head",
   "status",
   "section_who",
@@ -35,6 +36,17 @@
   "send_at",
   "column_break_when",
   "suggested_time",
+  "section_event",
+  "event_title",
+  "event_datetime",
+  "event_place",
+  "column_break_event",
+  "reminder_enabled",
+  "reminder_message",
+  "thanks_enabled",
+  "thanks_message",
+  "reminder_sent_on",
+  "thanks_sent_on",
   "section_result",
   "sent_count",
   "postponed_count",
@@ -50,6 +62,14 @@
    "in_list_view": 1,
    "label": "عنوان کمپین",
    "reqd": 1
+  },
+  {
+   "default": "Standard",
+   "fieldname": "campaign_type",
+   "fieldtype": "Select",
+   "label": "نوع کمپین",
+   "options": "Standard\nEvent Invitation",
+   "in_list_view": 1
   },
   {
    "fieldname": "column_break_head",
@@ -133,7 +153,7 @@
    "in_list_view": 1
   },
   {
-   "description": "می‌توانید بنویسید: {name} نام مشتری، {code} کد تخفیف، {discount} درصد تخفیف، {expiry} تاریخ انقضای کد.",
+   "description": "می‌توانید بنویسید: {name} نام مشتری، {code} کد تخفیف، {discount} درصد تخفیف، {expiry} تاریخ انقضای کد. برای دعوت به رویداد: {event} نام، {date} تاریخ، {time} ساعت و {place} مکان.",
    "fieldname": "message",
    "fieldtype": "Small Text",
    "label": "متن پیام",
@@ -178,6 +198,78 @@
    "label": "زمان پیشنهادی",
    "read_only": 1,
    "depends_on": "suggested_time"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "section_event",
+   "fieldtype": "Section Break",
+   "label": "رویداد"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "mandatory_depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "event_title",
+   "fieldtype": "Data",
+   "label": "نام رویداد"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "mandatory_depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "event_datetime",
+   "fieldtype": "Datetime",
+   "label": "زمان رویداد"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "event_place",
+   "fieldtype": "Data",
+   "label": "مکان"
+  },
+  {
+   "fieldname": "column_break_event",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "reminder_enabled",
+   "fieldtype": "Check",
+   "label": "یادآوری یک روز قبل"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation' && doc.reminder_enabled",
+   "fieldname": "reminder_message",
+   "fieldtype": "Small Text",
+   "label": "متن یادآوری"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:doc.campaign_type=='Event Invitation'",
+   "fieldname": "thanks_enabled",
+   "fieldtype": "Check",
+   "label": "تشکر یک روز بعد"
+  },
+  {
+   "depends_on": "eval:doc.campaign_type=='Event Invitation' && doc.thanks_enabled",
+   "fieldname": "thanks_message",
+   "fieldtype": "Small Text",
+   "label": "متن تشکر"
+  },
+  {
+   "fieldname": "reminder_sent_on",
+   "fieldtype": "Datetime",
+   "label": "یادآوری فرستاده شد",
+   "read_only": 1,
+   "no_copy": 1,
+   "depends_on": "reminder_sent_on"
+  },
+  {
+   "fieldname": "thanks_sent_on",
+   "fieldtype": "Datetime",
+   "label": "تشکر فرستاده شد",
+   "read_only": 1,
+   "no_copy": 1,
+   "depends_on": "thanks_sent_on"
   },
   {
    "collapsible": 1,

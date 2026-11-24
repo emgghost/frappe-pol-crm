@@ -7,10 +7,10 @@ five minutes starts the campaigns that are due and sends them in the background.
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import cint, flt, get_datetime, now_datetime
+from frappe.utils import add_days, cint, flt, get_datetime, now_datetime
 
-from pol_crm.marketing_automation.audience import count_audience, get_audience
-from pol_crm.marketing_automation.messages import preview_text, send_to_customer
+from pol_crm.marketing_hub.audience import count_audience, get_audience
+from pol_crm.marketing_hub.messages import preview_text, send_to_customer
 
 EDITABLE = ("Draft",)
 
@@ -21,6 +21,12 @@ class MktCampaign(Document):
 			frappe.throw(_("درصد تخفیف باید بین ۰ و ۱۰۰ باشد."))
 		if "{code}" in (self.message or "") and not flt(self.discount_percent):
 			frappe.throw(_("متن پیام {code} دارد، ولی درصد کد تخفیف صفر است."))
+		if self.campaign_type == "Event Invitation":
+			if self.event_datetime and self.send_at and get_datetime(self.send_at) >= get_datetime(self.event_datetime):
+				frappe.throw(_("دعوت‌نامه باید قبل از زمان رویداد فرستاده شود."))
+			for field, label in (("reminder", "یادآوری"), ("thanks", "تشکر")):
+				if self.get(f"{field}_enabled") and not self.get(f"{field}_message"):
+					frappe.throw(_("متن {0} را بنویسید یا تیکش را بردارید.").format(label))
 		if self.status in EDITABLE:
 			self.audience_count = count_audience(self)
 
@@ -98,7 +104,7 @@ def start_campaign(name):
 	"""Mark the campaign as sending and hand it to a background worker."""
 	frappe.db.set_value("Mkt Campaign", name, "status", "Sending")
 	frappe.enqueue(
-		"pol_crm.marketing_automation.doctype.mkt_campaign.mkt_campaign.send_campaign",
+		"pol_crm.marketing_hub.doctype.mkt_campaign.mkt_campaign.send_campaign",
 		queue="long",
 		timeout=3600,
 		name=name,
@@ -108,13 +114,55 @@ def start_campaign(name):
 
 
 def process_due_campaigns():
-	"""Every few minutes: start the scheduled campaigns whose time has come."""
+	"""Every few minutes: start the scheduled campaigns whose time has come, and send the
+	reminders and thank-yous of event invitations that are due."""
 	for name in frappe.get_all(
 		"Mkt Campaign",
 		filters={"status": "Scheduled", "send_at": ("<=", now_datetime())},
 		pluck="name",
 	):
 		start_campaign(name)
+	send_event_follow_ups()
+
+
+def send_event_follow_ups():
+	now = now_datetime()
+	for c in frappe.get_all(
+		"Mkt Campaign",
+		filters={"status": "Sent", "campaign_type": "Event Invitation", "event_datetime": ("is", "set")},
+		fields=["name", "event_datetime", "reminder_enabled", "reminder_sent_on", "thanks_enabled", "thanks_sent_on"],
+	):
+		event = get_datetime(c.event_datetime)
+		if c.reminder_enabled and not c.reminder_sent_on and add_days(event, -1) <= now < event:
+			send_follow_up(c.name, "reminder_message", "reminder_sent_on")
+		if c.thanks_enabled and not c.thanks_sent_on and now >= add_days(event, 1):
+			send_follow_up(c.name, "thanks_message", "thanks_sent_on")
+
+
+def send_follow_up(name, message_field, done_field):
+	"""The reminder or thank-you goes to everyone the invitation reached."""
+	# Mark it first: a slow send must not be started again by the next run.
+	frappe.db.set_value("Mkt Campaign", name, done_field, now_datetime())
+	frappe.db.commit()
+	campaign = frappe.get_doc("Mkt Campaign", name)
+	reached = frappe.get_all(
+		"Mkt Message Log",
+		filters={"campaign": name, "status": ("in", ("SENT", "POSTPONED"))},
+		pluck="customer",
+		distinct=True,
+	)
+	for customer in set(reached):
+		row = frappe.db.get_value(
+			"Customer", customer, ["name", "customer_name", "mobile_no", "custom_telegram_chat_id"], as_dict=True
+		)
+		if not row:
+			continue
+		try:
+			# Same rules as any marketing message: quiet hours and the daily cap still apply.
+			send_to_customer(row, campaign, reason="CAMPAIGN", campaign=name, template=campaign.get(message_field))
+		except Exception:
+			frappe.log_error(title=f"Campaign {name} follow-up", message=frappe.get_traceback())
+		frappe.db.commit()
 
 
 def send_campaign(name):

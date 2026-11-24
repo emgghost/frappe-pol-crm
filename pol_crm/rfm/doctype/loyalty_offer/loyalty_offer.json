@@ -18,7 +18,9 @@
   "valid_until",
   "section_discount",
   "discount_code",
-  "percentage_value"
+  "percentage_value",
+  "campaign",
+  "scenario"
  ],
  "fields": [
   {
@@ -85,6 +87,20 @@
    "fieldname": "percentage_value",
    "fieldtype": "Float",
    "label": "درصد تخفیف"
+  },
+  {
+   "fieldname": "campaign",
+   "fieldtype": "Link",
+   "label": "کمپین",
+   "options": "Mkt Campaign",
+   "read_only": 1
+  },
+  {
+   "fieldname": "scenario",
+   "fieldtype": "Link",
+   "label": "اتوماسیون",
+   "options": "Mkt Scenario",
+   "read_only": 1
   }
  ],
  "module": "RFM",
@@ -116,5 +132,5 @@
    "role": "Sales User"
   }
  ],
- "modified": "2026-11-23 18:30:00.000000"
+ "modified": "2026-11-24 10:00:00.000000"
 }

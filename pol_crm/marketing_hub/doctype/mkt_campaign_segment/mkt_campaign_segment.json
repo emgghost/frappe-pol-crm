@@ -8,7 +8,7 @@
  "engine": "InnoDB",
  "istable": 1,
  "editable_grid": 1,
- "module": "Marketing Automation",
+ "module": "Marketing Hub",
  "name": "Mkt Campaign Segment",
  "field_order": [
   "segment"
@@ -28,3 +28,4 @@
  "sort_order": "DESC",
  "states": []
 }
+

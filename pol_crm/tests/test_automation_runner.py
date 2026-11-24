@@ -1,7 +1,7 @@
 """
 Unit & Integration Tests for Story 5 (Issue #6):
 Who gets an automation and when is tested against a real site in
-marketing_automation/doctype/mkt_campaign/test_mkt_campaign.py.
+marketing_hub/doctype/mkt_campaign/test_mkt_campaign.py.
 Marketing Automation Scenarios & Jinja2 Template Runner Tests.
 """
 
@@ -13,7 +13,7 @@ from pol_crm.tests.frappe_mock import setup_mock_frappe, reset_mock_frappe
 mock_frappe = setup_mock_frappe()
 
 import frappe
-from pol_crm.marketing_automation.runner import (
+from pol_crm.marketing_hub.runner import (
     render_template_string,
     trigger_segment_change_automations,
     run_inactivity_scan,

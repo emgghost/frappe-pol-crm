@@ -5,7 +5,7 @@
    "label": "توزیع سگمنت‌های مشتریان (RFM)"
   }
  ],
- "content": "[{\"id\": \"pol_h1\", \"type\": \"header\", \"data\": {\"text\": \"باشگاه مشتریان\", \"level\": 3, \"col\": 12}}, {\"id\": \"pol_c1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان وفادار و قهرمان\", \"col\": 3}}, {\"id\": \"pol_c2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان در خطر ریزش\", \"col\": 3}}, {\"id\": \"pol_c3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"آفرهای فعال وفاداری\", \"col\": 3}}, {\"id\": \"pol_c4\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"پیام‌های ارسال‌شده\", \"col\": 3}}, {\"id\": \"pol_ch1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"توزیع سگمنت‌های مشتریان (RFM)\", \"col\": 12}}, {\"id\": \"pol_h2\", \"type\": \"header\", \"data\": {\"text\": \"مشتریان به تفکیک وضعیت\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_s0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"قهرمانان\", \"col\": 4}}, {\"id\": \"pol_s1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"وفادار\", \"col\": 4}}, {\"id\": \"pol_s2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"تازه‌وارد\", \"col\": 4}}, {\"id\": \"pol_s3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"نیازمند توجه\", \"col\": 4}}, {\"id\": \"pol_s4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"در خطر ریزش\", \"col\": 4}}, {\"id\": \"pol_s5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"خوابیده و ازدست‌رفته\", \"col\": 4}}, {\"id\": \"pol_h3\", \"type\": \"header\", \"data\": {\"text\": \"کارهای روزانه\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_d0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"آفرهای فعال\", \"col\": 3}}, {\"id\": \"pol_d1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"سناریوهای روشن\", \"col\": 3}}, {\"id\": \"pol_d2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های به‌تعویق‌افتاده\", \"col\": 3}}, {\"id\": \"pol_d3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های ناموفق\", \"col\": 3}}, {\"id\": \"pol_d4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"باز کردن CRM (معامله‌ها و مخاطبین)\", \"col\": 12}}, {\"id\": \"pol_h4\", \"type\": \"header\", \"data\": {\"text\": \"همه‌ی بخش‌ها\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_card1\", \"type\": \"card\", \"data\": {\"card_name\": \"وفاداری و پیشنهادها\", \"col\": 4}}, {\"id\": \"pol_card2\", \"type\": \"card\", \"data\": {\"card_name\": \"پیام‌رسانی و اتوماسیون\", \"col\": 4}}, {\"id\": \"pol_card3\", \"type\": \"card\", \"data\": {\"card_name\": \"گزارش‌ها و تنظیمات\", \"col\": 4}}]",
+ "content": "[{\"id\": \"pol_h1\", \"type\": \"header\", \"data\": {\"text\": \"باشگاه مشتریان\", \"level\": 3, \"col\": 12}}, {\"id\": \"pol_c1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان وفادار و قهرمان\", \"col\": 4}}, {\"id\": \"pol_c2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"مشتریان در خطر ریزش\", \"col\": 4}}, {\"id\": \"pol_c3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"آفرهای فعال وفاداری\", \"col\": 4}}, {\"id\": \"pol_ch1\", \"type\": \"chart\", \"data\": {\"chart_name\": \"توزیع سگمنت‌های مشتریان (RFM)\", \"col\": 12}}, {\"id\": \"pol_h2\", \"type\": \"header\", \"data\": {\"text\": \"مشتریان به تفکیک وضعیت\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_s0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"قهرمانان\", \"col\": 4}}, {\"id\": \"pol_s1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"وفادار\", \"col\": 4}}, {\"id\": \"pol_s2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"تازه‌وارد\", \"col\": 4}}, {\"id\": \"pol_s3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"نیازمند توجه\", \"col\": 4}}, {\"id\": \"pol_s4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"در خطر ریزش\", \"col\": 4}}, {\"id\": \"pol_s5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"خوابیده و ازدست‌رفته\", \"col\": 4}}, {\"id\": \"pol_h3\", \"type\": \"header\", \"data\": {\"text\": \"کارهای روزانه\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_d0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"آفرهای فعال\", \"col\": 3}}, {\"id\": \"pol_d4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"باز کردن CRM (معامله‌ها و مخاطبین)\", \"col\": 12}}, {\"id\": \"pol_h4\", \"type\": \"header\", \"data\": {\"text\": \"همه‌ی بخش‌ها\", \"level\": 4, \"col\": 12}}, {\"id\": \"pol_card1\", \"type\": \"card\", \"data\": {\"card_name\": \"وفاداری و پیشنهادها\", \"col\": 6}}, {\"id\": \"pol_card3\", \"type\": \"card\", \"data\": {\"card_name\": \"گزارش‌ها و تنظیمات\", \"col\": 6}}]",
  "creation": "2026-10-17 12:00:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
@@ -59,49 +59,10 @@
   },
   {
    "hidden": 0,
-   "icon": "send",
-   "is_query_report": 0,
-   "label": "پیام‌رسانی و اتوماسیون",
-   "link_count": 3,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "سناریوهای خودکار",
-   "link_count": 0,
-   "link_to": "Mkt Scenario",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "تاریخچه‌ی پیام‌ها",
-   "link_count": 0,
-   "link_to": "Mkt Message Log",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "کمپین‌ها",
-   "link_count": 0,
-   "link_to": "Campaign",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
    "icon": "settings",
    "is_query_report": 0,
    "label": "گزارش‌ها و تنظیمات",
-   "link_count": 5,
+   "link_count": 4,
    "onboard": 0,
    "type": "Card Break"
   },
@@ -138,16 +99,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "تنظیمات پیامک و تلگرام",
-   "link_count": 0,
-   "link_to": "Messaging Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "گروه‌های مشتری",
    "link_count": 0,
    "link_to": "Customer Group",
@@ -156,7 +107,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-11-23 18:00:00.000000",
+ "modified": "2026-11-24 10:00:00.000000",
  "modified_by": "Administrator",
  "module": "RFM",
  "name": "POL CRM",
@@ -172,10 +123,6 @@
   {
    "label": "آفرهای فعال وفاداری",
    "number_card_name": "POL Active Offers"
-  },
-  {
-   "label": "پیام‌های ارسال‌شده",
-   "number_card_name": "POL Sent Messages"
   }
  ],
  "owner": "Administrator",
@@ -241,30 +188,6 @@
    "link_to": "Loyalty Offer",
    "type": "DocType",
    "stats_filter": "[[\"Loyalty Offer\", \"status\", \"=\", \"ACTIVE\"]]"
-  },
-  {
-   "color": "Purple",
-   "doc_view": "List",
-   "label": "سناریوهای روشن",
-   "link_to": "Mkt Scenario",
-   "type": "DocType",
-   "stats_filter": "[[\"Mkt Scenario\", \"enabled\", \"=\", 1]]"
-  },
-  {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "پیام‌های به‌تعویق‌افتاده",
-   "link_to": "Mkt Message Log",
-   "type": "DocType",
-   "stats_filter": "[[\"Mkt Message Log\", \"status\", \"=\", \"POSTPONED\"]]"
-  },
-  {
-   "color": "Red",
-   "doc_view": "List",
-   "label": "پیام‌های ناموفق",
-   "link_to": "Mkt Message Log",
-   "type": "DocType",
-   "stats_filter": "[[\"Mkt Message Log\", \"status\", \"=\", \"FAILED\"]]"
   },
   {
    "color": "Green",

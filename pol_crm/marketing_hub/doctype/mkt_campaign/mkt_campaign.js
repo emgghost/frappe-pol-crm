@@ -2,6 +2,7 @@ frappe.ui.form.on("Mkt Campaign", {
 	setup(frm) {
 		pol_crm.marketing.set_options(frm, "last_purchase");
 		pol_crm.marketing.set_options(frm, "channel");
+		pol_crm.marketing.set_options(frm, "campaign_type");
 		frm.fields_dict.segments.grid.update_docfield_property(
 			"segment",
 			"options",

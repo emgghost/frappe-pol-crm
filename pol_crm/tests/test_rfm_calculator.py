@@ -391,13 +391,13 @@ class TestCalculateRFMForCustomer(unittest.TestCase):
 
     def test_on_segment_changed_hook_dispatch(self):
         """Test that segment transition triggers the marketing automation runner."""
-        with patch("pol_crm.marketing_automation.runner.trigger_segment_change_automations") as mock_runner:
+        with patch("pol_crm.marketing_hub.runner.trigger_segment_change_automations") as mock_runner:
             on_segment_changed("CUST-100", "POTENTIAL_LOYALIST", "CHAMPIONS")
             mock_runner.assert_called_once_with("CUST-100", "POTENTIAL_LOYALIST", "CHAMPIONS")
 
     def test_on_segment_changed_hook_handles_runner_exception(self):
         """Test resilience if marketing automation runner throws an exception."""
-        with patch("pol_crm.marketing_automation.runner.trigger_segment_change_automations", side_effect=RuntimeError("Runner failed")):
+        with patch("pol_crm.marketing_hub.runner.trigger_segment_change_automations", side_effect=RuntimeError("Runner failed")):
             # Should not raise exception
             on_segment_changed("CUST-100", "POTENTIAL_LOYALIST", "CHAMPIONS")
             frappe.logger().error.assert_called()

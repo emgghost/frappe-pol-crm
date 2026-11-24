@@ -9,6 +9,8 @@ An automation says who and when through its trigger, and what through its messag
 	PURCHASE_COUNT      their Nth purchase is submitted                 (right away)
 	SPEND_THRESHOLD     their total purchases pass an amount            (right away)
 	BIRTHDAY            today is their birthday                         (daily, at the set hour)
+	OCCASION            today is an occasion in the occasion calendar   (daily, at the set hour)
+	BACK_IN_STOCK       an item they asked for has stock again          (checked every hour)
 
 Every message still goes through the messaging rules: quiet hours, the daily and weekly cap
 per customer, opt-outs and test mode.
@@ -20,7 +22,7 @@ import jinja2
 import frappe
 from frappe.utils import add_days, cint, flt, getdate, nowdate
 
-DAILY_TRIGGERS = ("INACTIVITY", "FIRST_ORDER", "AFTER_PURCHASE", "BIRTHDAY")
+DAILY_TRIGGERS = ("INACTIVITY", "FIRST_ORDER", "AFTER_PURCHASE", "BIRTHDAY", "OCCASION")
 CUSTOMER_FIELDS = ["name", "customer_name", "mobile_no", "custom_telegram_chat_id"]
 
 
@@ -55,15 +57,17 @@ def already_sent(scenario, customer, since=None):
 	return bool(frappe.db.exists("Mkt Message Log", filters))
 
 
-def send(scenario, customer):
-	from pol_crm.marketing_automation.messages import send_to_customer
+def send(scenario, customer, extra=None):
+	from pol_crm.marketing_hub.messages import send_to_customer
 
 	if isinstance(customer, str):
 		customer = frappe.db.get_value("Customer", customer, CUSTOMER_FIELDS, as_dict=True)
 	if not customer:
 		return None
+	if not scenario.get("doctype"):  # a row from get_all, not a loaded document
+		scenario = frappe._dict(scenario, doctype="Mkt Scenario")
 	try:
-		return send_to_customer(customer, scenario, reason="AUTOMATION", scenario=scenario.name)
+		return send_to_customer(customer, scenario, reason="AUTOMATION", scenario=scenario.name, extra=extra)
 	except Exception:
 		frappe.log_error(title=f"Automation {scenario.name}", message=frappe.get_traceback())
 		return None
@@ -97,7 +101,7 @@ def on_sales_invoice_submit(doc, method=None):
 	if not doc.customer or doc.get("is_return"):
 		return
 	frappe.enqueue(
-		"pol_crm.marketing_automation.runner.run_purchase_automations",
+		"pol_crm.marketing_hub.runner.run_purchase_automations",
 		queue="short",
 		customer=doc.customer,
 		invoice_total=flt(doc.base_grand_total),
@@ -161,6 +165,20 @@ def customers_born_on(day):
 	)
 
 
+def occasions_on(scenario, today):
+	filters = {"enabled": 1, "occasion_date": today}
+	if scenario.occasion:
+		filters["name"] = scenario.occasion
+	return frappe.get_all("Mkt Occasion", filters=filters, pluck="name")
+
+
+def recent_buyers(days):
+	filters = {"disabled": 0}
+	if cint(days):
+		filters["custom_last_purchase_date"] = (">=", add_days(nowdate(), -cint(days)))
+	return frappe.get_all("Customer", filters=filters, pluck="name")
+
+
 def due_customers(scenario, today):
 	trigger = scenario.trigger_type
 	if trigger == "INACTIVITY":
@@ -175,6 +193,8 @@ def due_customers(scenario, today):
 
 
 def run_scenario_for_day(scenario, today):
+	if scenario.trigger_type == "OCCASION":
+		return run_occasion_for_day(scenario, today)
 	sent = 0
 	once_since = add_days(today, -300) if scenario.trigger_type == "BIRTHDAY" else None
 	for customer in due_customers(scenario, today):
@@ -189,6 +209,87 @@ def run_scenario_for_day(scenario, today):
 	return sent
 
 
+def run_occasion_for_day(scenario, today):
+	sent = 0
+	for occasion in occasions_on(scenario, today):
+		for customer in recent_buyers(scenario.occasion_last_purchase_days):
+			# once per occasion per year, even if the automation is run twice
+			if already_sent(scenario.name, customer, since=add_days(today, -300)):
+				continue
+			if send(scenario, customer, extra={"occasion": occasion}):
+				sent += 1
+	frappe.db.set_value("Mkt Scenario", scenario.name, "last_run_on", today)
+	frappe.db.commit()
+	return sent
+
+
+def roll_occasions(today):
+	"""Yearly occasions that have passed move to the same Jalali day next year."""
+	for row in frappe.get_all(
+		"Mkt Occasion", filters={"repeats_yearly": 1, "occasion_date": ("<", today)}, fields=["name", "occasion_date"]
+	):
+		frappe.db.set_value("Mkt Occasion", row.name, "occasion_date", next_jalali_anniversary(row.occasion_date, today))
+
+
+def next_jalali_anniversary(date, today):
+	try:
+		from iran_base.utils.jalali import gregorian_to_jalali, jalali_to_gregorian
+	except ImportError:
+		date = getdate(date)
+		while date < getdate(today):
+			date = date.replace(year=date.year + 1)
+		return date
+
+	import datetime
+
+	date = getdate(date)
+	_jy, jm, jd = gregorian_to_jalali(date.year, date.month, date.day)
+	ty, _tm, _td = gregorian_to_jalali(getdate(today).year, getdate(today).month, getdate(today).day)
+	for year in (ty, ty + 1):
+		# Esfand 30 only exists in a leap year; fall back to the 29th.
+		day = jd
+		while day > 0:
+			try:
+				candidate = datetime.date(*jalali_to_gregorian(year, jm, day))
+				break
+			except ValueError:
+				day -= 1
+		if candidate >= getdate(today):
+			return candidate
+	return candidate
+
+
+def stock_by_item(items):
+	return dict(
+		frappe.db.sql(
+			"select item_code, sum(actual_qty) from `tabBin` where item_code in %s group by item_code",
+			(items,),
+		)
+	)
+
+
+def run_back_in_stock():
+	"""Customers on the waitlist hear as soon as their item has stock again."""
+	scenarios = scenarios_for("BACK_IN_STOCK")
+	waiting = frappe.get_all("Mkt Stock Waitlist", filters={"status": "Waiting"}, fields=["name", "customer", "item"])
+	if not scenarios or not waiting:
+		return
+	stock = stock_by_item(list({w.item for w in waiting}))
+	for entry in waiting:
+		if flt(stock.get(entry.item)) <= 0:
+			continue
+		item_name = frappe.db.get_value("Item", entry.item, "item_name") or entry.item
+		for scenario in scenarios:
+			send(scenario, entry.customer, extra={"item": item_name})
+		frappe.db.set_value("Mkt Stock Waitlist", entry.name, {"status": "Notified", "notified_on": frappe.utils.now_datetime()})
+		frappe.db.commit()
+
+
+def run_hourly_automations():
+	run_back_in_stock()
+	run_daily_automations()
+
+
 def local_now():
 	from pol_crm.messaging.policy import get_messaging_settings
 
@@ -201,6 +302,7 @@ def run_daily_automations():
 	"""Hourly: run each daily automation once a day, at or after its hour (Tehran time)."""
 	now = local_now()
 	today = now.date()
+	roll_occasions(today)
 	for trigger in DAILY_TRIGGERS:
 		for scenario in scenarios_for(trigger):
 			if trigger in ("FIRST_ORDER", "AFTER_PURCHASE") and not cint(scenario.delay_days):

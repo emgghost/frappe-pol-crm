@@ -27,13 +27,13 @@ class MktScenario(Document):
 
 	@frappe.whitelist()
 	def preview(self):
-		from pol_crm.marketing_automation.messages import preview_text
+		from pol_crm.marketing_hub.messages import preview_text
 
 		return {"text": preview_text(self)}
 
 	@frappe.whitelist()
 	def send_test(self, mobile=None, chat_id=None):
 		frappe.only_for(("System Manager", "Marketing Manager"))
-		from pol_crm.marketing_automation.doctype.mkt_campaign.mkt_campaign import send_test_message
+		from pol_crm.marketing_hub.doctype.mkt_campaign.mkt_campaign import send_test_message
 
 		return send_test_message(self, mobile, chat_id)

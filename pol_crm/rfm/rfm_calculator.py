@@ -319,7 +319,7 @@ def on_segment_changed(customer_name, old_segment, new_segment):
     )
     # Notify marketing automation runner
     try:
-        from pol_crm.marketing_automation.runner import trigger_segment_change_automations
+        from pol_crm.marketing_hub.runner import trigger_segment_change_automations
         trigger_segment_change_automations(customer_name, old_segment, new_segment)
     except Exception as e:
         frappe.logger("pol_crm").error(f"Error triggering segment change automation: {str(e)}")

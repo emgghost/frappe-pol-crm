@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "creation": "2026-11-24 10:00:00.000000",
+ "modified": "2026-11-24 10:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "module": "Marketing Hub",
+ "name": "Mkt Occasion",
+ "field_order": [
+  "occasion_name",
+  "occasion_date",
+  "column_break_1",
+  "repeats_yearly",
+  "enabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "occasion_name",
+   "fieldtype": "Data",
+   "label": "نام مناسبت",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "occasion_date",
+   "fieldtype": "Date",
+   "label": "تاریخ",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "repeats_yearly",
+   "fieldtype": "Check",
+   "label": "هر سال در همین روز (تقویم شمسی)",
+   "in_list_view": 1,
+   "description": "برای مناسبت‌های قمری که هر سال جابه‌جا می‌شوند تیک را بردارید و هر سال تاریخ را به‌روز کنید."
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "فعال",
+   "in_list_view": 1
+  }
+ ],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "Marketing Manager",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales Manager"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Sales User",
+   "write": 1
+  }
+ ],
+ "sort_field": "occasion_date",
+ "sort_order": "ASC",
+ "states": [],
+ "autoname": "field:occasion_name",
+ "title_field": "occasion_name"
+}

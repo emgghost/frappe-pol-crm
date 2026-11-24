@@ -1,0 +1,81 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"mh_h1\", \"type\": \"header\", \"data\": {\"text\": \"Marketing Hub\", \"level\": 3, \"col\": 12}}, {\"id\": \"mh_n1\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"پیام‌های ارسال‌شده\", \"col\": 4}}, {\"id\": \"mh_s0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"قالب‌های آماده\", \"col\": 4}}, {\"id\": \"mh_s1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"کمپین جدید\", \"col\": 4}}, {\"id\": \"mh_s2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"اتوماسیون‌های روشن\", \"col\": 4}}, {\"id\": \"mh_s3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"عملکرد بازاریابی\", \"col\": 4}}, {\"id\": \"mh_s4\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های به صبح موکول‌شده\", \"col\": 4}}, {\"id\": \"mh_s5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"پیام‌های ناموفق\", \"col\": 4}}]",
+ "creation": "2026-11-24 10:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "megaphone",
+ "idx": 2,
+ "indicator_color": "orange",
+ "is_hidden": 0,
+ "label": "Marketing Hub",
+ "links": [],
+ "modified": "2026-11-24 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Marketing Hub",
+ "name": "Marketing Hub",
+ "number_cards": [
+  {
+   "label": "پیام‌های ارسال‌شده",
+   "number_card_name": "POL Sent Messages"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "label": "قالب‌های آماده",
+   "link_to": "marketing-templates",
+   "type": "Page"
+  },
+  {
+   "color": "Orange",
+   "label": "کمپین جدید",
+   "link_to": "Mkt Campaign",
+   "type": "DocType",
+   "doc_view": "List"
+  },
+  {
+   "color": "Green",
+   "label": "اتوماسیون‌های روشن",
+   "link_to": "Mkt Scenario",
+   "type": "DocType",
+   "doc_view": "List",
+   "stats_filter": "[[\"Mkt Scenario\",\"enabled\",\"=\",1]]"
+  },
+  {
+   "color": "Purple",
+   "label": "عملکرد بازاریابی",
+   "link_to": "Marketing Performance",
+   "type": "Report"
+  },
+  {
+   "color": "Yellow",
+   "label": "پیام‌های به صبح موکول‌شده",
+   "link_to": "Mkt Message Log",
+   "type": "DocType",
+   "doc_view": "List",
+   "stats_filter": "[[\"Mkt Message Log\",\"status\",\"=\",\"POSTPONED\"]]"
+  },
+  {
+   "color": "Red",
+   "label": "پیام‌های ناموفق",
+   "link_to": "Mkt Message Log",
+   "type": "DocType",
+   "doc_view": "List",
+   "stats_filter": "[[\"Mkt Message Log\",\"status\",\"=\",\"FAILED\"]]"
+  }
+ ],
+ "standard": 1,
+ "title": "Marketing Hub",
+ "type": "Workspace"
+}

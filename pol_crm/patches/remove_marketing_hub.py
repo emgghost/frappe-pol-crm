@@ -1,14 +1,31 @@
 """
-Take out the marketing hub that was built for the Iraqi market (Meta Ads, Wafi,
-WhatsApp, Instagram, a wallet in dinars). It never held any records on our sites
-apart from the occasions it seeded itself, so nothing of the merchant's is lost.
+Take out what the Iraqi version of the marketing hub added: Meta ads, Wafi, the wallet in
+dinars and the customer fields only Iraqi channels used. They never held records on our
+sites, so nothing of the merchant's is lost.
+
+The Iran Marketing Hub ships under the same module name, with its own campaign, occasion,
+waitlist, templates page and report, so this names exactly what goes and leaves the module,
+its page, report and sidebar to the normal sync.
 """
 
 import frappe
 
-MODULE = "Marketing Hub"
+IRAQ_DOCTYPES = (
+	# child tables first, so their parents can go without dangling links
+	"Meta Ad Card",
+	"Wafi Ad Placement",
+	"Meta Ad",
+	"Meta Ad Set",
+	"Meta Ad Campaign",
+	"Wafi Ad",
+	"Wafi Offer",
+	"Wafi Notification",
+	"Wafi Promote Request",
+	"Mkt Wallet Transaction",
+	"Mkt Scenario Run",
+	"Marketing Hub Settings",
+)
 
-# Customer fields that only the Iraqi channels and address format used.
 CUSTOM_FIELDS = (
 	"Customer-custom_governorate",
 	"Customer-custom_wafi_user_id",
@@ -18,25 +35,12 @@ CUSTOM_FIELDS = (
 
 
 def execute():
-	for page in frappe.get_all("Page", filters={"module": MODULE}, pluck="name"):
-		frappe.delete_doc("Page", page, force=True, ignore_missing=True)
-
-	for report in frappe.get_all("Report", filters={"module": MODULE}, pluck="name"):
-		frappe.delete_doc("Report", report, force=True, ignore_missing=True)
-
-	# Child tables first, so their parents can go without dangling links.
-	doctypes = frappe.get_all("DocType", filters={"module": MODULE}, fields=["name", "istable"])
-	for doctype in sorted(doctypes, key=lambda d: not d.istable):
-		frappe.delete_doc("DocType", doctype.name, force=True, ignore_missing=True)
+	for doctype in IRAQ_DOCTYPES:
+		frappe.delete_doc("DocType", doctype, force=True, ignore_missing=True)
 		# Deleting the DocType leaves its table behind. These held nothing of the merchant's.
-		frappe.db.sql_ddl(f"drop table if exists `tab{doctype.name}`")
-
-	# The hub's sidebar linked to the doctypes above. The app no longer ships one.
-	if frappe.db.exists("DocType", "Sidebar"):
-		frappe.delete_doc("Sidebar", "RFM", force=True, ignore_missing=True)
+		frappe.db.sql_ddl(f"drop table if exists `tab{doctype}`")
 
 	for field in CUSTOM_FIELDS:
 		frappe.delete_doc("Custom Field", field, force=True, ignore_missing=True)
 
-	frappe.delete_doc("Module Def", MODULE, force=True, ignore_missing=True)
 	frappe.clear_cache()

@@ -4,9 +4,9 @@ import frappe
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, add_to_date, now_datetime, nowdate
 
-from pol_crm.marketing_automation import runner
-from pol_crm.marketing_automation.doctype.mkt_campaign.mkt_campaign import process_due_campaigns
-from pol_crm.marketing_automation.templates import AUTOMATIONS, CAMPAIGNS, create_from_template
+from pol_crm.marketing_hub import runner
+from pol_crm.marketing_hub.doctype.mkt_campaign.mkt_campaign import process_due_campaigns
+from pol_crm.marketing_hub.templates import AUTOMATIONS, CAMPAIGNS, create_from_template
 
 SMS_OK = {"success": True, "message_id": "1"}
 
@@ -68,7 +68,7 @@ class TestIranMarketing(IntegrationTestCase):
 				"segments": [{"segment": "CHAMPIONS"}, {"segment": "LOYAL"}],
 			}
 		).insert()
-		from pol_crm.marketing_automation.audience import get_audience
+		from pol_crm.marketing_hub.audience import get_audience
 
 		self.assertEqual(self.ours(c.name for c in get_audience(campaign)), ["POLT Ali", "POLT Sara"])
 
@@ -211,3 +211,100 @@ class TestSignaladsRoute(IntegrationTestCase):
 		):
 			result = policy.send_plain_sms("09121234567", "سلام")
 		self.assertFalse(result["success"])
+
+
+class TestHubExtras(IntegrationTestCase):
+	def setUp(self):
+		TestIranMarketing.setUp(self)
+		frappe.db.delete("Mkt Occasion")
+		frappe.db.delete("Mkt Stock Waitlist")
+
+	def scenario(self, **values):
+		return frappe.get_doc(
+			{"doctype": "Mkt Scenario", "scenario_name": "t", "enabled": 1, "message_template": "سلام {name}", **values}
+		).insert()
+
+	@patch("pol_crm.messaging.policy.send_plain_sms", return_value=SMS_OK)
+	def test_occasion_greets_recent_buyers_once(self, sms):
+		frappe.db.set_value("Customer", self.ali.name, "custom_last_purchase_date", add_days(nowdate(), -10))
+		frappe.db.set_value("Customer", self.reza.name, "custom_last_purchase_date", add_days(nowdate(), -500))
+		frappe.get_doc({"doctype": "Mkt Occasion", "occasion_name": "شب یلدا", "occasion_date": nowdate()}).insert()
+		scenario = self.scenario(
+			trigger_type="OCCASION", occasion_last_purchase_days=365, message_template="{name} عزیز، {occasion} مبارک"
+		)
+		runner.run_scenario_for_day(scenario, runner.getdate(nowdate()))
+		runner.run_scenario_for_day(scenario, runner.getdate(nowdate()))
+		self.assertEqual([c.args[0] for c in sms.call_args_list], ["09121234567"])
+		self.assertIn("شب یلدا مبارک", sms.call_args.args[1])
+
+	def test_yearly_occasion_moves_to_next_jalali_year(self):
+		frappe.get_doc(
+			{"doctype": "Mkt Occasion", "occasion_name": "نوروز", "occasion_date": "2025-03-21", "repeats_yearly": 1}
+		).insert()
+		runner.roll_occasions(runner.getdate("2026-11-24"))
+		# 1 Farvardin 1406
+		self.assertEqual(str(frappe.db.get_value("Mkt Occasion", "نوروز", "occasion_date")), "2027-03-21")
+
+	@patch("pol_crm.messaging.policy.send_plain_sms", return_value=SMS_OK)
+	def test_back_in_stock_tells_waiting_customers_once(self, sms):
+		self.scenario(trigger_type="BACK_IN_STOCK", message_template="{name} عزیز، {item} موجود شد")
+		for customer, item in ((self.ali.name, "ITEM-A"), (self.sara.name, "ITEM-B")):
+			frappe.get_doc({"doctype": "Mkt Stock Waitlist", "customer": customer, "item": item}).insert(ignore_links=True)
+		with patch.object(runner, "stock_by_item", return_value={"ITEM-A": 3, "ITEM-B": 0}):
+			runner.run_back_in_stock()
+			runner.run_back_in_stock()
+		self.assertEqual([c.args[0] for c in sms.call_args_list], ["09121234567"])
+		self.assertIn("ITEM-A موجود شد", sms.call_args.args[1])
+		self.assertEqual(frappe.db.get_value("Mkt Stock Waitlist", {"customer": self.ali.name}, "status"), "Notified")
+
+	@patch("pol_crm.messaging.policy.send_plain_sms", return_value=SMS_OK)
+	def test_event_invitation_reminds_and_thanks_the_invited(self, sms):
+		from pol_crm.marketing_hub.doctype.mkt_campaign.mkt_campaign import send_event_follow_ups
+
+		event_at = add_to_date(now_datetime(), hours=20)
+		campaign = frappe.get_doc(
+			{
+				"doctype": "Mkt Campaign",
+				"campaign_name": "افتتاحیه",
+				"campaign_type": "Event Invitation",
+				"segments": [{"segment": "CHAMPIONS"}],
+				"event_title": "افتتاحیه",
+				"event_datetime": event_at,
+				"event_place": "شعبه‌ی مرکزی",
+				"message": "دعوت به {event} در {place}",
+				"reminder_enabled": 1,
+				"reminder_message": "یادآوری {event}",
+				"thanks_enabled": 1,
+				"thanks_message": "ممنون از حضور در {event}",
+			}
+		).insert()
+		campaign.schedule()
+		self.assertIn("دعوت به افتتاحیه در شعبه‌ی مرکزی", sms.call_args.args[1])
+
+		send_event_follow_ups()  # 20 hours before: reminder is due
+		send_event_follow_ups()  # not twice
+		self.assertEqual([c.args[1] for c in sms.call_args_list][1:], ["یادآوری افتتاحیه"])
+
+		frappe.db.set_value("Mkt Campaign", campaign.name, "event_datetime", add_to_date(now_datetime(), days=-2))
+		send_event_follow_ups()
+		self.assertEqual(sms.call_args.args[1], "ممنون از حضور در افتتاحیه")
+		self.assertEqual(sms.call_count, 3)
+
+	@patch("pol_crm.messaging.policy.send_plain_sms", return_value=SMS_OK)
+	def test_performance_report_counts_reach_and_codes(self, sms):
+		from pol_crm.marketing_hub.report.marketing_performance.marketing_performance import execute
+
+		campaign = frappe.get_doc(
+			{
+				"doctype": "Mkt Campaign",
+				"campaign_name": "گزارش",
+				"segments": [{"segment": "CHAMPIONS"}, {"segment": "LOYAL"}],
+				"discount_percent": 10,
+				"message": "{name} {code}",
+			}
+		).insert()
+		campaign.schedule()
+		_columns, rows, _m, _chart, summary = execute({"kind": "Campaign"})
+		row = next(r for r in rows if r["reference"] == campaign.name)
+		self.assertEqual((row["reached"], row["codes"]), (2, 2))
+		self.assertEqual(summary[0]["value"], 2)

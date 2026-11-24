@@ -24,6 +24,14 @@ pol_crm.marketing.labels = {
 		PURCHASE_COUNT: "به خرید چندم رسیده",
 		SPEND_THRESHOLD: "جمع خریدش به مبلغی رسیده",
 		BIRTHDAY: "تولدش است",
+		OCCASION: "روز یک مناسبت است",
+		BACK_IN_STOCK: "کالایی که منتظرش بود موجود شد",
+	},
+	campaign_type: { Standard: "معمولی (یک‌باره)", "Event Invitation": "دعوت به رویداد" },
+	waitlist_status: {
+		Waiting: ["در انتظار", "orange"],
+		Notified: ["خبر داده شد", "green"],
+		Cancelled: ["لغو شد", "gray"],
 	},
 	last_purchase: {
 		ANY_TIME: "مهم نیست",
@@ -48,9 +56,11 @@ pol_crm.marketing.set_options = function (frm, fieldname, labels) {
 	frm.set_df_property(fieldname, "options", pol_crm.marketing.options(labels || fieldname));
 };
 
-pol_crm.marketing.show_templates = function (kind) {
-	const doctype = kind === "campaign" ? "Mkt Campaign" : "Mkt Scenario";
-	frappe.call("pol_crm.marketing_automation.templates.get_templates", { kind }).then((r) => {
+pol_crm.marketing.doctype_of = (kind) => (kind === "campaign" ? "Mkt Campaign" : "Mkt Scenario");
+
+// Fill $wrapper with the template cards of one kind; "Use" makes the document and opens it.
+pol_crm.marketing.render_templates = function ($wrapper, kind, before_open) {
+	return frappe.call("pol_crm.marketing_hub.templates.get_templates", { kind }).then((r) => {
 		const cards = (r.message || [])
 			.map(
 				(t) => `
@@ -68,31 +78,31 @@ pol_crm.marketing.show_templates = function (kind) {
 			</div>`
 			)
 			.join("");
-		const d = new frappe.ui.Dialog({
-			title: kind === "campaign" ? __("قالب‌های آماده‌ی کمپین") : __("قالب‌های آماده‌ی اتوماسیون"),
-			size: "large",
-			fields: [{ fieldtype: "HTML", fieldname: "list" }],
-		});
-		d.fields_dict.list.$wrapper.html(
+		$wrapper.html(
 			`<p class="text-muted">${
 				kind === "campaign"
 					? __("یک پیش‌نویس ساخته می‌شود؛ هر چیزی را خواستید تغییر دهید و بعد «ارسال» بزنید.")
 					: __("خاموش ساخته می‌شود؛ بعد از بررسی، تیک «روشن» را بزنید.")
 			}</p>${cards}`
 		);
-		d.fields_dict.list.$wrapper.on("click", "button[data-id]", function () {
+		$wrapper.off("click.pol").on("click.pol", "button[data-id]", function () {
 			frappe
-				.call("pol_crm.marketing_automation.templates.create_from_template", {
-					kind,
-					template_id: $(this).data("id"),
-				})
+				.call("pol_crm.marketing_hub.templates.create_from_template", { kind, template_id: $(this).data("id") })
 				.then((res) => {
-					d.hide();
-					frappe.set_route("Form", doctype, res.message);
+					before_open && before_open();
+					frappe.set_route("Form", pol_crm.marketing.doctype_of(kind), res.message);
 				});
 		});
-		d.show();
 	});
+};
+
+pol_crm.marketing.show_templates = function (kind) {
+	const d = new frappe.ui.Dialog({
+		title: kind === "campaign" ? __("قالب‌های آماده‌ی کمپین") : __("قالب‌های آماده‌ی اتوماسیون"),
+		size: "large",
+		fields: [{ fieldtype: "HTML", fieldname: "list" }],
+	});
+	pol_crm.marketing.render_templates(d.fields_dict.list.$wrapper, kind, () => d.hide()).then(() => d.show());
 };
 
 pol_crm.marketing.test_send = function (frm) {

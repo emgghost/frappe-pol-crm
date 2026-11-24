@@ -25,8 +25,14 @@ msgstr "کد تخفیف و آفر"
 msgid "RFM Settings"
 msgstr "تنظیمات RFM"
 
-msgid "Marketing Automation"
-msgstr "بازاریابی خودکار"
-
 msgid "Messaging"
 msgstr "پیام‌رسانی"
+
+msgid "Mkt Occasion"
+msgstr "مناسبت"
+
+msgid "Mkt Stock Waitlist"
+msgstr "لیست انتظار موجودی"
+
+msgid "Marketing Performance"
+msgstr "عملکرد بازاریابی"

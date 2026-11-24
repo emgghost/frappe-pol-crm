@@ -110,6 +110,28 @@ CAMPAIGNS = [
 	},
 ]
 
+CAMPAIGNS.append(
+	{
+		"id": "event-invitation",
+		"title": "دعوت به رویداد",
+		"who": "مشتریانی که در سه ماه اخیر خرید کرده‌اند",
+		"what": "دعوت‌نامه، یادآوری یک روز قبل و تشکر یک روز بعد",
+		"when": "یک هفته قبل از رویداد",
+		"needs": "نام، زمان و مکان رویداد را وارد کنید.",
+		"doc": {
+			"campaign_name": "دعوت به رویداد",
+			"campaign_type": "Event Invitation",
+			"last_purchase": "BOUGHT_WITHIN",
+			"last_purchase_days": 90,
+			"message": "{name} عزیز، شما را به {event} دعوت می‌کنیم: {date} ساعت {time}، {place}. منتظرتان هستیم!",
+			"reminder_enabled": 1,
+			"reminder_message": "{name} عزیز، یادتان نرود: فردا ساعت {time} {event}، {place}.",
+			"thanks_enabled": 1,
+			"thanks_message": "{name} عزیز، از اینکه در {event} همراه ما بودید ممنونیم.",
+		},
+	}
+)
+
 AUTOMATIONS = [
 	{
 		"id": "winback-60",
@@ -217,6 +239,35 @@ AUTOMATIONS = [
 	},
 ]
 
+AUTOMATIONS += [
+	{
+		"id": "occasions",
+		"title": "تبریک مناسبت‌ها",
+		"who": "مشتریانی که در یک سال اخیر خرید کرده‌اند",
+		"what": "تبریک هر مناسبتی که در «مناسبت‌ها» ثبت شده",
+		"when": "روز هر مناسبت، ساعت ۹ صبح، هر سال",
+		"doc": {
+			"scenario_name": "تبریک مناسبت‌ها",
+			"trigger_type": "OCCASION",
+			"occasion_last_purchase_days": 365,
+			"send_hour": 9,
+			"message_template": "{name} عزیز، {occasion} مبارک! با آرزوی بهترین‌ها از طرف همه‌ی ما.",
+		},
+	},
+	{
+		"id": "back-in-stock",
+		"title": "خبر موجود شدن کالا",
+		"who": "مشتریانی که در «لیست انتظار موجودی» منتظر کالایی هستند",
+		"what": "خبر اینکه کالا دوباره موجود شد",
+		"when": "حداکثر یک ساعت بعد از موجود شدن",
+		"doc": {
+			"scenario_name": "خبر موجود شدن کالا",
+			"trigger_type": "BACK_IN_STOCK",
+			"message_template": "{name} عزیز، {item} که منتظرش بودید دوباره موجود شد!",
+		},
+	},
+]
+
 KINDS = {"campaign": ("Mkt Campaign", CAMPAIGNS), "automation": ("Mkt Scenario", AUTOMATIONS)}
 
 
@@ -239,11 +290,12 @@ def create_from_template(kind, template_id):
 		frappe.throw(_("این قالب پیدا نشد."))
 
 	doc = frappe.get_doc({"doctype": doctype, **template["doc"]})
+	# A draft or a switched-off automation: what the template cannot know (an amount, an
+	# event's date) the merchant fills in before sending or turning it on.
+	doc.flags.ignore_mandatory = True
 	if kind == "campaign":
 		doc.suggested_time = template["when"]
 	else:
-		# Off until the merchant reviews it, so a missing amount can wait for them to fill it.
 		doc.enabled = 0
-		doc.flags.ignore_mandatory = True
 	doc.insert()
 	return doc.name

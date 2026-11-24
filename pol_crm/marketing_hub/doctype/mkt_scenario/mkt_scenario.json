@@ -19,6 +19,8 @@
   "delay_days",
   "purchase_count_target",
   "spend_threshold",
+  "occasion",
+  "occasion_last_purchase_days",
   "column_break_when",
   "send_hour",
   "trigger_help",
@@ -65,7 +67,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "چه اتفاقی بیفتد",
-   "options": "INACTIVITY\nRFM_SEGMENT_CHANGE\nFIRST_ORDER\nAFTER_PURCHASE\nPURCHASE_COUNT\nSPEND_THRESHOLD\nBIRTHDAY",
+   "options": "INACTIVITY\nRFM_SEGMENT_CHANGE\nFIRST_ORDER\nAFTER_PURCHASE\nPURCHASE_COUNT\nSPEND_THRESHOLD\nBIRTHDAY\nOCCASION\nBACK_IN_STOCK",
    "reqd": 1
   },
   {
@@ -108,11 +110,27 @@
    "label": "وقتی جمع خریدش به این مبلغ رسید"
   },
   {
+   "depends_on": "eval:doc.trigger_type=='OCCASION'",
+   "fieldname": "occasion",
+   "fieldtype": "Link",
+   "label": "کدام مناسبت",
+   "options": "Mkt Occasion",
+   "description": "خالی یعنی همه‌ی مناسبت‌های فعال."
+  },
+  {
+   "depends_on": "eval:doc.trigger_type=='OCCASION'",
+   "fieldname": "occasion_last_purchase_days",
+   "fieldtype": "Int",
+   "default": "365",
+   "label": "فقط مشتریانی که در این چند روز خرید کرده‌اند",
+   "description": "صفر یعنی همه‌ی مشتریان."
+  },
+  {
    "fieldname": "column_break_when",
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:['INACTIVITY','FIRST_ORDER','AFTER_PURCHASE','BIRTHDAY'].includes(doc.trigger_type)",
+   "depends_on": "eval:['INACTIVITY','FIRST_ORDER','AFTER_PURCHASE','BIRTHDAY','OCCASION'].includes(doc.trigger_type)",
    "fieldname": "send_hour",
    "fieldtype": "Int",
    "label": "ساعت ارسال",
@@ -181,7 +199,7 @@
    "label": "کد الگوی پیامک (پترن)"
   }
  ],
- "module": "Marketing Automation",
+ "module": "Marketing Hub",
  "name": "Mkt Scenario",
  "permissions": [
   {
@@ -207,5 +225,5 @@
    "role": "Sales User"
   }
  ],
- "modified": "2026-11-23 18:30:00.000000"
+ "modified": "2026-11-24 10:00:00.000000"
 }
